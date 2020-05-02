@@ -4,9 +4,14 @@ export interface Customer {
   lastName: string;
 }
 
+export interface CustomerCredentials {
+  email: string;
+}
+
 export interface CustomerReducer {
   customer: Customer;
   status: CustomerActionStatuses;
+  loggedIn: boolean;
 }
 
 export enum CustomerActionStatuses {

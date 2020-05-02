@@ -2,20 +2,21 @@ import { Dispatch } from "redux";
 import {
   Customer,
   CustomerActionStatuses,
+  CustomerCredentials,
 } from "../../../interfaces/CustomerInfo";
 import axios from "axios";
 import { DispatchAction } from "../../reducers/customerReducer";
 import { API_ENDPOINT, CUSTOMERS_POSTFIX } from "../../../consts/endpoints";
 
 export const getCustomer = (
-  customer: Customer,
+  customerCredentials: CustomerCredentials,
   dispatch: Dispatch<DispatchAction>
 ) => {
   getCustomerPending(dispatch);
   axios
-    .post(`${API_ENDPOINT + CUSTOMERS_POSTFIX + "/"}`, customer)
+    .post(`${API_ENDPOINT + CUSTOMERS_POSTFIX + "/"}`, customerCredentials)
     .then((response) => {
-      getCustomerSuccess(customer, dispatch);
+      getCustomerSuccess(customerCredentials, dispatch);
     })
     .catch((error) => {
       getCustomerFailed(dispatch);
@@ -23,12 +24,12 @@ export const getCustomer = (
 };
 
 const getCustomerSuccess = (
-  customer: Customer,
+  customerCredentials: CustomerCredentials,
   dispatch: Dispatch<DispatchAction>
 ) => {
   dispatch({
     type: CustomerActionStatuses.CREATE_CUSTOMER_SUCCESSFUL,
-    payload: customer,
+    payload: customerCredentials,
   });
 };
 const getCustomerPending = (dispatch: Dispatch<DispatchAction>) => {

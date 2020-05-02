@@ -12,6 +12,7 @@ export interface DispatchAction extends Action<CustomerActionStatuses> {
 const initialState: CustomerReducer = {
   customer: { firstName: "", lastName: "", email: "" },
   status: CustomerActionStatuses.CREATE_CUSTOMER_NOT_TRIGGERED_YET,
+  loggedIn: false,
 };
 
 export const customerReducer: Reducer<CustomerReducer, DispatchAction> = (
