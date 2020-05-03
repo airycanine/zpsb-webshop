@@ -4,7 +4,7 @@ import "../../styles/App.css";
 import NavigationBar from "../containers/NavigationBar";
 import LoginForm from "../containers/LoginForm";
 import AccountCreationForm from "../containers/AccountCreationForm";
-
+import ReduxToastr from "react-redux-toastr";
 const AppRouter = () => {
   return (
     <>
@@ -23,6 +23,16 @@ const AppRouter = () => {
           </Route>
         </Switch>
       </Router>
+      <ReduxToastr
+        timeOut={4000}
+        newestOnTop={false}
+        preventDuplicates
+        position="bottom-right"
+        transitionIn="fadeIn"
+        transitionOut="fadeOut"
+        progressBar
+        closeOnToastrClick
+      />
     </>
   );
 };

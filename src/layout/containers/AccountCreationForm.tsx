@@ -9,6 +9,7 @@ import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/Cust
 import { Button, Form, Card, Col, InputGroup, Spinner } from "react-bootstrap";
 import "../../styles/accountCreationForm.css";
 import { STATUS_CODES } from "http";
+import { toastr } from "react-redux-toastr";
 
 interface StateProps {
   customerReducer: CustomerReducer;
@@ -41,6 +42,7 @@ const AccountCreationForm = () => {
       <Card.Body>
         <Form
           onSubmit={(event: FormEvent) => {
+            event.preventDefault();
             customerActionsDispatcher.createCustomer(customer);
           }}
         >
