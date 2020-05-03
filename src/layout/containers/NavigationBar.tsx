@@ -1,24 +1,20 @@
 import React from "react";
-import {
-  Button,
-  Form,
-  FormControl,
-  Nav,
-  Navbar,
-  NavDropdown,
-  OverlayTrigger,
-} from "react-bootstrap";
+import { Button, Form, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { CustomerReducer } from "../../interfaces/CustomerInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { Reducers } from "../../store/reducers/reducers";
 import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
 import CustomPopover from "../components/customPopover";
+import VerticallyCenteredModal from "../components/verticallyCenteredModal";
+import UserCreationForm from "./UserCreationForm";
 
 interface StateProps {
   customerReducer: CustomerReducer;
 }
 
 const NavigationBar = () => {
+  const [modalShow, setModalShow] = React.useState(false);
+
   const { customerReducer } = useSelector<Reducers, StateProps>(
     (state: Reducers) => {
       return {
@@ -34,10 +30,7 @@ const NavigationBar = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <CustomPopover
-        title={"Jakub Walat"}
-        content={"All rights reserved &copy;"}
-      >
+      <CustomPopover title={"Jakub Walat"} content={`ZPSB final project`}>
         <Navbar.Brand href="#home">
           <Navbar.Brand href="#home">Car Webshop</Navbar.Brand>
         </Navbar.Brand>
@@ -65,7 +58,20 @@ const NavigationBar = () => {
           </NavDropdown>
         ) : (
           <Form>
-            <Button variant="outline-success">Log in</Button>
+            <Button
+              variant="outline-success"
+              onClick={() => setModalShow(true)}
+            >
+              Log in
+            </Button>
+
+            <VerticallyCenteredModal
+              title={"Provide credentials to log in"}
+              show={modalShow}
+              onHide={() => setModalShow(false)}
+            >
+              <UserCreationForm />
+            </VerticallyCenteredModal>
           </Form>
         )}
       </Navbar.Collapse>

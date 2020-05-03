@@ -9,8 +9,7 @@ const AppRouter = () => {
     <>
       <Router>
         <NavigationBar />
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
+
         <Switch>
           <Route path="/about">
             <UserCreationForm />
@@ -19,9 +18,7 @@ const AppRouter = () => {
             {" "}
             <UserCreationForm />
           </Route>
-          <Route path="/">
-            <UserCreationForm />
-          </Route>
+          <Route path="/"></Route>
         </Switch>
       </Router>
     </>
