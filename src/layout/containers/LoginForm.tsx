@@ -23,14 +23,6 @@ const LoginForm = () => {
     useDispatch()
   );
 
-  useEffect(() => {
-    customerActionsDispatcher.createCustomer({
-      firstName: "Joe",
-      lastName: "PAblo",
-      email: "valat@o2.pl",
-    });
-  }, []);
-
   return (
     <div className="user-creation-form">
       {/*<CustomStepper />*/}

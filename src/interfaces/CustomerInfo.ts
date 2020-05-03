@@ -10,7 +10,7 @@ export interface CustomerCredentials {
 
 export interface CustomerReducer {
   customer: Customer;
-  status: CustomerActionStatuses;
+  lastStatus: CustomerActionStatuses;
   loggedIn: boolean;
 }
 

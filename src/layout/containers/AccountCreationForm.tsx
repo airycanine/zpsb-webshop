@@ -28,7 +28,7 @@ const AccountCreationForm = () => {
 
   useEffect(() => {
     if (
-      customerReducer.status ===
+      customerReducer.lastStatus ===
       CustomerActionStatuses.CREATE_CUSTOMER_SUCCESSFUL
     ) {
       console.log("elo");
@@ -122,7 +122,7 @@ const AccountCreationForm = () => {
               variant="success"
               type="submit"
             >
-              {customerReducer.status ==
+              {customerReducer.lastStatus ==
               CustomerActionStatuses.CREATE_CUSTOMER_PENDING ? (
                 <Spinner animation="border" role="status">
                   <span className="sr-only">Loading...</span>
