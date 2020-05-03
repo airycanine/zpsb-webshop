@@ -7,6 +7,7 @@ import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/Cust
 import CustomPopover from "../components/customPopover";
 import VerticallyCenteredModal from "../components/verticallyCenteredModal";
 import LoginForm from "./LoginForm";
+import { Link } from "react-router-dom";
 
 interface StateProps {
   customerReducer: CustomerReducer;
@@ -30,31 +31,39 @@ const NavigationBar = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <CustomPopover title={"Jakub Walat"} content={`ZPSB final project`}>
-        <Navbar.Brand href="home">
-          <Navbar.Brand href="#home">Car Webshop</Navbar.Brand>
-        </Navbar.Brand>
-      </CustomPopover>
+      <Link to="/">
+        <CustomPopover title={"Jakub Walat"} content={`ZPSB final project`}>
+          <Navbar.Brand>
+            <Navbar.Brand>Car Webshop</Navbar.Brand>
+          </Navbar.Brand>
+        </CustomPopover>
+      </Link>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="home">Home</Nav.Link>
+          <Nav.Link>
+            <Link to="/home">Home</Link>
+          </Nav.Link>
           <NavDropdown title="Cars" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Show cars</NavDropdown.Item>
+            <NavDropdown.Item>
+              <Link to="/cars">Show cars </Link>
+            </NavDropdown.Item>
             <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.2">
-              Add a new car
+            <NavDropdown.Item>
+              <Link to="/cars/new">Add a new car </Link>
             </NavDropdown.Item>
           </NavDropdown>
         </Nav>
 
         {customerReducer.loggedIn ? (
           <NavDropdown title="Account" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">
-              Contact Information
+            <NavDropdown.Item>
+              <Link to="/account/contact">Contact Information</Link>
             </NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Your offers</NavDropdown.Item>
+            <NavDropdown.Item>
+              <Link to="/account/offers">Your offers</Link>
+            </NavDropdown.Item>
             <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">Log out</NavDropdown.Item>
+            <NavDropdown.Item>Log out</NavDropdown.Item>
           </NavDropdown>
         ) : (
           <Form>

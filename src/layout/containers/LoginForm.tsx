@@ -5,6 +5,7 @@ import { Reducers } from "../../store/reducers/reducers";
 import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
 import CustomStepper from "../components/customStepper";
 import { Button, Form, Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 interface StateProps {
   customerReducer: CustomerReducer;
@@ -53,13 +54,11 @@ const LoginForm = () => {
         </div>
         <footer className="blockquote-footer">
           <cite title="Source Title">Don't have an account?</cite>
-          <Button
-            href="account-creation"
-            className="offset-1"
-            variant="outline-warning"
-          >
-            Register
-          </Button>
+          <Link to="account-creation">
+            <Button className="offset-1" variant="outline-warning">
+              Register
+            </Button>
+          </Link>
         </footer>
       </Form>
     </div>

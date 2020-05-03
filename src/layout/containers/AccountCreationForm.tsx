@@ -6,10 +6,8 @@ import {
 } from "../../interfaces/CustomerInfo";
 import { Reducers } from "../../store/reducers/reducers";
 import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
-import { Button, Form, Card, Col, InputGroup, Spinner } from "react-bootstrap";
+import { Button, Card, Col, Form, InputGroup, Spinner } from "react-bootstrap";
 import "../../styles/accountCreationForm.css";
-import { STATUS_CODES } from "http";
-import { toastr } from "react-redux-toastr";
 
 interface StateProps {
   customerReducer: CustomerReducer;
@@ -26,24 +24,24 @@ const AccountCreationForm = () => {
   const customerActionsDispatcher = new CustomerActionsDispatcher(
     useDispatch()
   );
-
   const [customer, setCustomer] = useState(customerReducer.customer);
 
   useEffect(() => {
-    customerActionsDispatcher.createCustomer({
-      firstName: "Joe",
-      lastName: "PAblo",
-      email: "valat@o2.pl",
-    });
+    if (
+      customerReducer.status ===
+      CustomerActionStatuses.CREATE_CUSTOMER_SUCCESSFUL
+    ) {
+      console.log("elo");
+    }
   }, []);
 
   return (
     <Card className="account-creation-form">
       <Card.Body>
         <Form
-          onSubmit={(event: FormEvent) => {
+          onSubmit={async (event: FormEvent) => {
             event.preventDefault();
-            customerActionsDispatcher.createCustomer(customer);
+            await customerActionsDispatcher.createCustomer(customer);
           }}
         >
           <Form.Row>
