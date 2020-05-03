@@ -4,13 +4,13 @@ import { CustomerReducer } from "../../interfaces/CustomerInfo";
 import { Reducers } from "../../store/reducers/reducers";
 import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
 import CustomStepper from "../components/customStepper";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Nav } from "react-bootstrap";
 
 interface StateProps {
   customerReducer: CustomerReducer;
 }
 
-const UserCreationForm = () => {
+const LoginForm = () => {
   const { customerReducer } = useSelector<Reducers, StateProps>(
     (state: Reducers) => {
       return {
@@ -47,13 +47,17 @@ const UserCreationForm = () => {
         </Form.Group>
 
         <div className="text-right float-right">
-          <Button variant="outline-success" type="submit">
+          <Button size="lg" variant="outline-success" type="submit">
             Login
           </Button>
         </div>
         <footer className="blockquote-footer">
           <cite title="Source Title">Don't have an account?</cite>
-          <Button className="offset-1" variant="outline-warning">
+          <Button
+            href="account-creation"
+            className="offset-1"
+            variant="outline-warning"
+          >
             Register
           </Button>
         </footer>
@@ -62,4 +66,4 @@ const UserCreationForm = () => {
   );
 };
 
-export default UserCreationForm;
+export default LoginForm;

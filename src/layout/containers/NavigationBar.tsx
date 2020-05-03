@@ -6,7 +6,7 @@ import { Reducers } from "../../store/reducers/reducers";
 import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
 import CustomPopover from "../components/customPopover";
 import VerticallyCenteredModal from "../components/verticallyCenteredModal";
-import UserCreationForm from "./UserCreationForm";
+import LoginForm from "./LoginForm";
 
 interface StateProps {
   customerReducer: CustomerReducer;
@@ -31,13 +31,13 @@ const NavigationBar = () => {
     <Navbar bg="light" expand="lg">
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <CustomPopover title={"Jakub Walat"} content={`ZPSB final project`}>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="home">
           <Navbar.Brand href="#home">Car Webshop</Navbar.Brand>
         </Navbar.Brand>
       </CustomPopover>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
+          <Nav.Link href="home">Home</Nav.Link>
           <NavDropdown title="Cars" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Show cars</NavDropdown.Item>
             <NavDropdown.Divider />
@@ -70,7 +70,7 @@ const NavigationBar = () => {
               show={modalShow}
               onHide={() => setModalShow(false)}
             >
-              <UserCreationForm />
+              <LoginForm />
             </VerticallyCenteredModal>
           </Form>
         )}
