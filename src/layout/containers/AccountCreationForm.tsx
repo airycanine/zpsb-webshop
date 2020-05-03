@@ -41,7 +41,7 @@ const AccountCreationForm = () => {
         <Form
           onSubmit={async (event: FormEvent) => {
             event.preventDefault();
-            await customerActionsDispatcher.createCustomer(customer);
+            customerActionsDispatcher.createCustomer(customer, true);
           }}
         >
           <Form.Row>

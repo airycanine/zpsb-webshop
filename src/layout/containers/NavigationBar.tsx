@@ -30,15 +30,17 @@ const NavigationBar = () => {
 
   return (
     <Navbar bg="light" expand="lg">
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Link to="/">
-        <CustomPopover title={"Jakub Walat"} content={`ZPSB final project`}>
-          <Navbar.Brand>
-            <Navbar.Brand>Car Webshop</Navbar.Brand>
-          </Navbar.Brand>
-        </CustomPopover>
-      </Link>
-      <Navbar.Collapse id="basic-navbar-nav">
+      <div className="ml-5">
+        <Navbar.Toggle aria-controls="basic-navbar-nav " />
+        <Link to="/">
+          <CustomPopover title={"Jakub Walat"} content={`ZPSB final project`}>
+            <Navbar.Brand>
+              <Navbar.Brand>Car Webshop</Navbar.Brand>
+            </Navbar.Brand>
+          </CustomPopover>
+        </Link>
+      </div>
+      <Navbar.Collapse id="basic-navbar-nav ">
         <Nav className="mr-auto">
           <Nav.Link>
             <Link to="/home">Home</Link>
@@ -53,36 +55,37 @@ const NavigationBar = () => {
             </NavDropdown.Item>
           </NavDropdown>
         </Nav>
+        <div className="mr-lg-5">
+          {customerReducer.loggedIn ? (
+            <NavDropdown title="Account" id="basic-nav-dropdown">
+              <NavDropdown.Item>
+                <Link to="/account/contact">Information</Link>
+              </NavDropdown.Item>
+              <NavDropdown.Item>
+                <Link to="/account/offers">Your offers</Link>
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item>Log out</NavDropdown.Item>
+            </NavDropdown>
+          ) : (
+            <Form>
+              <Button
+                variant="outline-success"
+                onClick={() => setModalShow(true)}
+              >
+                Log in
+              </Button>
 
-        {customerReducer.loggedIn ? (
-          <NavDropdown title="Account" id="basic-nav-dropdown">
-            <NavDropdown.Item>
-              <Link to="/account/contact">Contact Information</Link>
-            </NavDropdown.Item>
-            <NavDropdown.Item>
-              <Link to="/account/offers">Your offers</Link>
-            </NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item>Log out</NavDropdown.Item>
-          </NavDropdown>
-        ) : (
-          <Form>
-            <Button
-              variant="outline-success"
-              onClick={() => setModalShow(true)}
-            >
-              Log in
-            </Button>
-
-            <VerticallyCenteredModal
-              title={"Provide credentials to log in"}
-              show={modalShow}
-              onHide={() => setModalShow(false)}
-            >
-              <LoginForm />
-            </VerticallyCenteredModal>
-          </Form>
-        )}
+              <VerticallyCenteredModal
+                title={"Provide credentials to log in"}
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+              >
+                <LoginForm />
+              </VerticallyCenteredModal>
+            </Form>
+          )}
+        </div>
       </Navbar.Collapse>
     </Navbar>
   );

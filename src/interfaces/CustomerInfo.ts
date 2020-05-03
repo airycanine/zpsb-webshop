@@ -6,6 +6,7 @@ export interface Customer {
 
 export interface CustomerCredentials {
   email: string;
+  password: string;
 }
 
 export interface CustomerReducer {

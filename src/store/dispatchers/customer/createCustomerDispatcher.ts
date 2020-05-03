@@ -7,9 +7,11 @@ import axios from "axios";
 import { DispatchAction } from "../../reducers/customerReducer";
 import { API_ENDPOINT, CUSTOMERS_POSTFIX } from "../../../consts/endpoints";
 import { toastr } from "react-redux-toastr";
+import { getCustomer } from "./getCustomerDispatcher";
 
 export const createCustomer = (
   customer: Customer,
+  logInAfterCreation: boolean,
   dispatch: Dispatch<DispatchAction>
 ) => {
   createCustomerPending(dispatch);
@@ -17,7 +19,11 @@ export const createCustomer = (
     .post(`${API_ENDPOINT + CUSTOMERS_POSTFIX + "/"}`, customer)
     .then((response) => {
       createCustomerSuccess(customer, dispatch);
-      toastr.success("Account created", "Welcome on board!");
+      if (logInAfterCreation) {
+        getCustomer({ email: customer.email, password: "test" }, dispatch);
+      } else {
+        toastr.success("Account created", "Welcome on board!");
+      }
     })
     .catch((error) => {
       createCustomerFailed(dispatch);

@@ -7,6 +7,7 @@ import {
 import axios from "axios";
 import { DispatchAction } from "../../reducers/customerReducer";
 import { API_ENDPOINT, CUSTOMERS_POSTFIX } from "../../../consts/endpoints";
+import { toastr } from "react-redux-toastr";
 
 export const getCustomer = (
   customerCredentials: CustomerCredentials,
@@ -14,12 +15,20 @@ export const getCustomer = (
 ) => {
   getCustomerPending(dispatch);
   axios
-    .post(`${API_ENDPOINT + CUSTOMERS_POSTFIX + "/"}`, customerCredentials)
-    .then((response) => {
-      getCustomerSuccess(customerCredentials, dispatch);
+    // @ts-ignore
+    .get(`${API_ENDPOINT + CUSTOMERS_POSTFIX + "/"}`, {
+      params: {
+        email: customerCredentials.email,
+        password: " s",
+      },
     })
-    .catch((error) => {
+    .then((response: any) => {
+      getCustomerSuccess(customerCredentials, dispatch);
+      toastr.success("Logged in", "Welcome!");
+    })
+    .catch((error: any) => {
       getCustomerFailed(dispatch);
+      toastr.error("Error", "An error occured while logging in..");
     });
 };
 
@@ -28,19 +37,19 @@ const getCustomerSuccess = (
   dispatch: Dispatch<DispatchAction>
 ) => {
   dispatch({
-    type: CustomerActionStatuses.CREATE_CUSTOMER_SUCCESSFUL,
+    type: CustomerActionStatuses.GET_CUSTOMER_SUCCESSFUL,
     payload: customerCredentials,
   });
 };
 const getCustomerPending = (dispatch: Dispatch<DispatchAction>) => {
   dispatch({
-    type: CustomerActionStatuses.CREATE_CUSTOMER_PENDING,
+    type: CustomerActionStatuses.GET_CUSTOMER_PENDING,
     payload: {},
   });
 };
 const getCustomerFailed = (dispatch: Dispatch<DispatchAction>) => {
   dispatch({
-    type: CustomerActionStatuses.CREATE_CUSTOMER_FAILED,
+    type: CustomerActionStatuses.GET_CUSTOMER_FAILED,
     payload: {},
   });
 };

@@ -6,6 +6,7 @@ import {
 import axios from "axios";
 import { DispatchAction } from "../../reducers/customerReducer";
 import { createCustomer } from "./createCustomerDispatcher";
+import { getCustomer } from "./getCustomerDispatcher";
 
 export class CustomerActionsDispatcher {
   private readonly dispatch: Dispatch<DispatchAction>;
@@ -14,7 +15,7 @@ export class CustomerActionsDispatcher {
     this.dispatch = dispatch;
   }
 
-  createCustomer = (customer: Customer) => {
-    createCustomer(customer, this.dispatch);
+  createCustomer = async (customer: Customer, logInAfterCreation: boolean) => {
+    await createCustomer(customer, logInAfterCreation, this.dispatch);
   };
 }

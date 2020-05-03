@@ -26,6 +26,13 @@ export const customerReducer: Reducer<CustomerReducer, DispatchAction> = (
         customer: action.payload,
         lastStatus: CustomerActionStatuses.CREATE_CUSTOMER_SUCCESSFUL,
       };
+    case CustomerActionStatuses.GET_CUSTOMER_SUCCESSFUL:
+      return {
+        ...state,
+        customer: action.payload,
+        loggedIn: true,
+        lastStatus: CustomerActionStatuses.CREATE_CUSTOMER_SUCCESSFUL,
+      };
     default:
       return { ...state, lastStatus: action.type };
   }
