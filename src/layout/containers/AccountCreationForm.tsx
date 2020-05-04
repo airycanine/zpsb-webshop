@@ -8,12 +8,14 @@ import { Reducers } from "../../store/reducers/reducers";
 import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
 import { Button, Card, Col, Form, InputGroup, Spinner } from "react-bootstrap";
 import "../../styles/accountCreationForm.css";
+import { useHistory } from "react-router-dom";
 
 interface StateProps {
   customerReducer: CustomerReducer;
 }
 
 const AccountCreationForm = () => {
+  let history = useHistory();
   const { customerReducer } = useSelector<Reducers, StateProps>(
     (state: Reducers) => {
       return {
@@ -21,19 +23,16 @@ const AccountCreationForm = () => {
       };
     }
   );
+
   const customerActionsDispatcher = new CustomerActionsDispatcher(
     useDispatch()
   );
+
   const [customer, setCustomer] = useState(customerReducer.customer);
 
   useEffect(() => {
-    if (
-      customerReducer.lastStatus ===
-      CustomerActionStatuses.CREATE_CUSTOMER_SUCCESSFUL
-    ) {
-      console.log("elo");
-    }
-  }, []);
+    customerReducer.loggedIn && history.push("/home");
+  }, [customerReducer.loggedIn]);
 
   return (
     <Card className="account-creation-form">

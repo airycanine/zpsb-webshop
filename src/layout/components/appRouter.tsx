@@ -5,20 +5,14 @@ import NavigationBar from "../containers/NavigationBar";
 import LoginForm from "../containers/LoginForm";
 import AccountCreationForm from "../containers/AccountCreationForm";
 import ReduxToastr from "react-redux-toastr";
+import { Pages } from "../../consts/Pages";
 const AppRouter = () => {
   return (
     <>
       <Router>
         <NavigationBar />
         <Switch>
-          <Route path="/about">
-            <LoginForm />
-          </Route>
-          <Route path="/users">
-            {" "}
-            <LoginForm />
-          </Route>
-          <Route path="/account-creation">
+          <Route path={Pages.REGISTER_FORM}>
             <AccountCreationForm />
           </Route>
         </Switch>

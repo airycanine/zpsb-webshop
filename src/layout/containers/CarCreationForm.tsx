@@ -1,36 +1,28 @@
-import React, { useEffect, useImperativeHandle } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { CustomerReducer } from "../../interfaces/CustomerInfo";
-import { Reducers } from "../../store/reducers/reducers";
-import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
-import CustomStepper from "../components/customStepper";
-import { Button, Form, Nav } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import React from "react";
+import { Button, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { Pages } from "../../consts/Pages";
 
-interface StateProps {
-  customerReducer: CustomerReducer;
-}
+interface StateProps {}
 
-interface LoginFormProps {
+interface CarCreationFormProps {
   hideModal: Function;
 }
 
-const LoginForm = ({ hideModal }: LoginFormProps) => {
-  const { customerReducer } = useSelector<Reducers, StateProps>(
-    (state: Reducers) => {
-      return {
-        customerReducer: state.customerReducer,
-      };
-    }
-  );
-  const customerActionsDispatcher = new CustomerActionsDispatcher(
-    useDispatch()
-  );
+const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
+  // const { customerReducer } = useSelector<Reducers, StateProps>(
+  //   (state: Reducers) => {
+  //     return {
+  //       customerReducer: state.customerReducer,
+  //     };
+  //   }
+  // );
+  // const customerActionsDispatcher = new CustomerActionsDispatcher(
+  //   useDispatch()
+  // );
 
   return (
-    <div className="user-creation-form">
-      {/*<CustomStepper />*/}
+    <div className="car-creation-form">
       <Form>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -39,6 +31,17 @@ const LoginForm = ({ hideModal }: LoginFormProps) => {
             We'll never share your email with anyone else.
           </Form.Text>
         </Form.Group>
+        <div className="mb-3">
+          <Form.File id="formcheck-api-custom" custom>
+            <Form.File.Input isValid />
+            <Form.File.Label data-browse="Button text">
+              Custom file input
+            </Form.File.Label>
+            <Form.Control.Feedback type="valid">
+              You did it!
+            </Form.Control.Feedback>
+          </Form.File>
+        </div>
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" placeholder="Password" />
@@ -68,4 +71,4 @@ const LoginForm = ({ hideModal }: LoginFormProps) => {
   );
 };
 
-export default LoginForm;
+export default CarCreationForm;

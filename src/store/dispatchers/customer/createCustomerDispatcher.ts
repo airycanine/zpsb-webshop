@@ -8,6 +8,7 @@ import { DispatchAction } from "../../reducers/customerReducer";
 import { API_ENDPOINT, CUSTOMERS_POSTFIX } from "../../../consts/endpoints";
 import { toastr } from "react-redux-toastr";
 import { getCustomer } from "./getCustomerDispatcher";
+import { useHistory } from "react-router-dom";
 
 export const createCustomer = (
   customer: Customer,

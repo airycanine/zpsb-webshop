@@ -8,6 +8,7 @@ import axios from "axios";
 import { DispatchAction } from "../../reducers/customerReducer";
 import { API_ENDPOINT, CUSTOMERS_POSTFIX } from "../../../consts/endpoints";
 import { toastr } from "react-redux-toastr";
+import { history } from "../../../layout/components/historyRouter";
 
 export const getCustomer = (
   customerCredentials: CustomerCredentials,

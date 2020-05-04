@@ -1,11 +1,19 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Button, Modal } from "react-bootstrap";
 
-const VerticallyCenteredModal = (props: any) => {
+interface VerticallyCenteredModalProps {
+  children: ReactNode;
+  title: ReactNode;
+  size: "sm" | "lg" | "xl" | undefined;
+  show: boolean;
+  onHide: Function;
+}
+
+const VerticallyCenteredModal = (props: VerticallyCenteredModalProps) => {
   return (
     <Modal
       {...props}
-      size="sm"
+      size={props.size}
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >

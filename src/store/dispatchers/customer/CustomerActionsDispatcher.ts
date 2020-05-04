@@ -15,7 +15,7 @@ export class CustomerActionsDispatcher {
     this.dispatch = dispatch;
   }
 
-  createCustomer = async (customer: Customer, logInAfterCreation: boolean) => {
-    await createCustomer(customer, logInAfterCreation, this.dispatch);
+  createCustomer = (customer: Customer, logInAfterCreation: boolean) => {
+    createCustomer(customer, logInAfterCreation, this.dispatch);
   };
 }
