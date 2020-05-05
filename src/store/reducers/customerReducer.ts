@@ -5,7 +5,7 @@ import {
   CustomerReducer,
 } from "../../interfaces/CustomerInfo";
 
-export interface DispatchAction extends Action<CustomerActionStatuses> {
+export interface CustomerActionDispatch extends Action<CustomerActionStatuses> {
   payload: Partial<Customer>;
 }
 
@@ -15,10 +15,10 @@ const initialState: CustomerReducer = {
   loggedIn: false,
 };
 
-export const customerReducer: Reducer<CustomerReducer, DispatchAction> = (
-  state: CustomerReducer | undefined = initialState,
-  action: any
-) => {
+export const customerReducer: Reducer<
+  CustomerReducer,
+  CustomerActionDispatch
+> = (state: CustomerReducer | undefined = initialState, action: any) => {
   switch (action.type) {
     case CustomerActionStatuses.CREATE_CUSTOMER_SUCCESSFUL:
       return {

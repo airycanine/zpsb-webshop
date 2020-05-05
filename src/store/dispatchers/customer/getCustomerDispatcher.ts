@@ -5,14 +5,14 @@ import {
   CustomerCredentials,
 } from "../../../interfaces/CustomerInfo";
 import axios from "axios";
-import { DispatchAction } from "../../reducers/customerReducer";
+import { CustomerActionDispatch } from "../../reducers/customerReducer";
 import { API_ENDPOINT, CUSTOMERS_POSTFIX } from "../../../consts/endpoints";
 import { toastr } from "react-redux-toastr";
 import { history } from "../../../layout/components/historyRouter";
 
 export const getCustomer = (
   customerCredentials: CustomerCredentials,
-  dispatch: Dispatch<DispatchAction>
+  dispatch: Dispatch<CustomerActionDispatch>
 ) => {
   getCustomerPending(dispatch);
   axios
@@ -35,20 +35,20 @@ export const getCustomer = (
 
 const getCustomerSuccess = (
   customerCredentials: CustomerCredentials,
-  dispatch: Dispatch<DispatchAction>
+  dispatch: Dispatch<CustomerActionDispatch>
 ) => {
   dispatch({
     type: CustomerActionStatuses.GET_CUSTOMER_SUCCESSFUL,
     payload: customerCredentials,
   });
 };
-const getCustomerPending = (dispatch: Dispatch<DispatchAction>) => {
+const getCustomerPending = (dispatch: Dispatch<CustomerActionDispatch>) => {
   dispatch({
     type: CustomerActionStatuses.GET_CUSTOMER_PENDING,
     payload: {},
   });
 };
-const getCustomerFailed = (dispatch: Dispatch<DispatchAction>) => {
+const getCustomerFailed = (dispatch: Dispatch<CustomerActionDispatch>) => {
   dispatch({
     type: CustomerActionStatuses.GET_CUSTOMER_FAILED,
     payload: {},

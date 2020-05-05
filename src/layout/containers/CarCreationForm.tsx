@@ -1,71 +1,103 @@
-import React from "react";
-import { Button, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { Pages } from "../../consts/Pages";
-
-interface StateProps {}
+import React, { FormEvent, useEffect, useState } from "react";
+import { Button, Col, Form } from "react-bootstrap";
+import CurrencyDropdown from "../components/currencyDropdown";
+import MultipleImagesUploader from "../components/imageUploader";
+import { useDispatch, useSelector } from "react-redux";
+import { Reducers } from "../../store/reducers/reducers";
+import { CarActionsDispatcher } from "../../store/dispatchers/car/CarActionsDispatcher";
+import { Car, CarActionStatuses, CarReducer } from "../../interfaces/CarInfo";
 
 interface CarCreationFormProps {
   hideModal: Function;
 }
 
+interface PropsFromStore {
+  carReducer: CarReducer;
+}
+
 const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
-  // const { customerReducer } = useSelector<Reducers, StateProps>(
-  //   (state: Reducers) => {
-  //     return {
-  //       customerReducer: state.customerReducer,
-  //     };
-  //   }
-  // );
-  // const customerActionsDispatcher = new CustomerActionsDispatcher(
-  //   useDispatch()
-  // );
+  const { carReducer } = useSelector<Reducers, PropsFromStore>(
+    (state: Reducers) => {
+      return {
+        carReducer: state.carReducer,
+      };
+    }
+  );
+  const carActionsDispatcher = new CarActionsDispatcher(useDispatch());
+  const [car, setCar] = useState<Car>({
+    brand: "",
+    currency: "",
+    images: [],
+    licenceNumber: "",
+    model: "",
+    price: "",
+  });
+  useEffect(() => {
+    if (carReducer.lastStatus === CarActionStatuses.CREATE_CAR_SUCCESSFUL) {
+      console.log("ss");
+      carActionsDispatcher.resetStatus();
+      hideModal();
+    }
+  }, [carReducer.car]);
 
   return (
     <div className="car-creation-form">
-      <Form>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-        </Form.Group>
-        <div className="mb-3">
-          <Form.File id="formcheck-api-custom" custom>
-            <Form.File.Input isValid />
-            <Form.File.Label data-browse="Button text">
-              Custom file input
-            </Form.File.Label>
-            <Form.Control.Feedback type="valid">
-              You did it!
-            </Form.Control.Feedback>
-          </Form.File>
-        </div>
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
-        </Form.Group>
+      <Form
+        onSubmit={(event: FormEvent) => {
+          event.preventDefault();
+          carActionsDispatcher.createCar(car);
+        }}
+      >
+        <Form.Row>
+          <Form.Group as={Col} controlId="formGridModel">
+            <Form.Label>Model</Form.Label>
+            <Form.Control
+              value={car.model}
+              onChange={(event) =>
+                setCar({ ...car, model: event.target.value })
+              }
+              type="text"
+              placeholder="125p"
+            />
+          </Form.Group>
 
-        <div className="text-right float-right">
+          <Form.Group as={Col} controlId="formGridCompany">
+            <Form.Label>Brand</Form.Label>
+            <Form.Control
+              value={car.brand}
+              onChange={(event) =>
+                setCar({ ...car, brand: event.target.value })
+              }
+              type="text"
+              placeholder="Polski Fiat"
+            />
+          </Form.Group>
+        </Form.Row>
+        <Form.Group controlId="formGridLicencePlate">
+          <Form.Label>Licence Number</Form.Label>
+          <Form.Control
+            value={car.licenceNumber}
+            onChange={(event) =>
+              setCar({ ...car, licenceNumber: event.target.value })
+            }
+            placeholder="ZS 12345A"
+          />
+        </Form.Group>
+        <div className="mb-3"></div>
+        <CurrencyDropdown
+          onPriceChange={(price: number) => setCar({ ...car, price })}
+          onCurrencyChange={(currency: string) => setCar({ ...car, currency })}
+        ></CurrencyDropdown>
+        <MultipleImagesUploader
+          onUpload={(image: any) =>
+            setCar({ ...car, images: [...car.images, image] })
+          }
+        ></MultipleImagesUploader>
+        <div className="text-right float-right mt-4">
           <Button size="lg" variant="outline-success" type="submit">
-            Login
+            Submit offer
           </Button>
         </div>
-        <footer className="blockquote-footer">
-          <cite title="Source Title">Don't have an account?</cite>
-          <Link to={Pages.REGISTER_FORM}>
-            <Button
-              onClick={() => {
-                hideModal();
-              }}
-              className="offset-1"
-              variant="outline-warning"
-            >
-              Register
-            </Button>
-          </Link>
-        </footer>
       </Form>
     </div>
   );

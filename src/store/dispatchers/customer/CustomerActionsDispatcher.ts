@@ -1,17 +1,12 @@
 import { Dispatch } from "redux";
-import {
-  Customer,
-  CustomerActionStatuses,
-} from "../../../interfaces/CustomerInfo";
-import axios from "axios";
-import { DispatchAction } from "../../reducers/customerReducer";
+import { Customer } from "../../../interfaces/CustomerInfo";
+import { CustomerActionDispatch } from "../../reducers/customerReducer";
 import { createCustomer } from "./createCustomerDispatcher";
-import { getCustomer } from "./getCustomerDispatcher";
 
 export class CustomerActionsDispatcher {
-  private readonly dispatch: Dispatch<DispatchAction>;
+  private readonly dispatch: Dispatch<CustomerActionDispatch>;
 
-  constructor(dispatch: Dispatch<DispatchAction>) {
+  constructor(dispatch: Dispatch<CustomerActionDispatch>) {
     this.dispatch = dispatch;
   }
 
