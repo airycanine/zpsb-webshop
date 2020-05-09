@@ -87,7 +87,7 @@ const NavigationBar = () => {
               </Button>
 
               <VerticallyCenteredModal
-                title={"Provide credentials to log in"}
+                title={"Provide credentials"}
                 show={loginModalShown}
                 size={"sm"}
                 onHide={() => setLoginModalShown(false)}

@@ -1,11 +1,12 @@
 import React, { FormEvent, useEffect, useState } from "react";
-import { Button, Col, Form } from "react-bootstrap";
+import { Button, Col, Form, Spinner } from "react-bootstrap";
 import CurrencyDropdown from "../components/currencyDropdown";
 import MultipleImagesUploader from "../components/imageUploader";
 import { useDispatch, useSelector } from "react-redux";
 import { Reducers } from "../../store/reducers/reducers";
 import { CarActionsDispatcher } from "../../store/dispatchers/car/CarActionsDispatcher";
 import { Car, CarActionStatuses, CarReducer } from "../../interfaces/CarInfo";
+import "../../styles/common.css";
 
 interface CarCreationFormProps {
   hideModal: Function;
@@ -31,10 +32,13 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
     licenceNumber: "",
     model: "",
     price: "",
+    author: "",
   });
+
+  const [lastImageUrl, setLastImageUrl] = useState("");
+
   useEffect(() => {
     if (carReducer.lastStatus === CarActionStatuses.CREATE_CAR_SUCCESSFUL) {
-      console.log("ss");
       carActionsDispatcher.resetStatus();
       hideModal();
     }
@@ -45,7 +49,9 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
       <Form
         onSubmit={(event: FormEvent) => {
           event.preventDefault();
-          carActionsDispatcher.createCar(car);
+          const images = [];
+          images.push(lastImageUrl);
+          carActionsDispatcher.createCar({ ...car, images });
         }}
       >
         <Form.Row>
@@ -73,29 +79,57 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
             />
           </Form.Group>
         </Form.Row>
-        <Form.Group controlId="formGridLicencePlate">
-          <Form.Label>Licence Number</Form.Label>
-          <Form.Control
-            value={car.licenceNumber}
-            onChange={(event) =>
-              setCar({ ...car, licenceNumber: event.target.value })
-            }
-            placeholder="ZS 12345A"
-          />
-        </Form.Group>
-        <div className="mb-3"></div>
-        <CurrencyDropdown
-          onPriceChange={(price: number) => setCar({ ...car, price })}
-          onCurrencyChange={(currency: string) => setCar({ ...car, currency })}
-        ></CurrencyDropdown>
+        <Form.Row>
+          <Form.Group as={Col} controlId="formGridLicence">
+            <Form.Label>Licence Number</Form.Label>
+            <Form.Control
+              value={car.licenceNumber}
+              onChange={(event) =>
+                setCar({ ...car, licenceNumber: event.target.value })
+              }
+              placeholder="ZS 12345A"
+            />
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group as={Col} controlId="formGridCurrency">
+            <div className="mb-3"></div>
+            <CurrencyDropdown
+              onPriceChange={(price: number) => setCar({ ...car, price })}
+              onCurrencyChange={(currency: string) =>
+                setCar({ ...car, currency })
+              }
+            ></CurrencyDropdown>
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group as={Col} controlId="formGridImage">
+            <Form.Label>Link to picture</Form.Label>
+            <Form.Control
+              value={lastImageUrl}
+              onChange={(event) => setLastImageUrl(event.target.value)}
+              placeholder="Url to picture"
+            />
+          </Form.Group>
+        </Form.Row>
+
         <MultipleImagesUploader
           onUpload={(image: any) =>
             setCar({ ...car, images: [...car.images, image] })
           }
         ></MultipleImagesUploader>
         <div className="text-right float-right mt-4">
-          <Button size="lg" variant="outline-success" type="submit">
-            Submit offer
+          <Button
+            className="button-for-spinner"
+            size="lg"
+            variant="outline-success"
+            type="submit"
+          >
+            {carReducer.lastStatus == CarActionStatuses.CREATE_CAR_PENDING ? (
+              <Spinner animation="border" role="status"></Spinner>
+            ) : (
+              "Submit offer"
+            )}
           </Button>
         </div>
       </Form>

@@ -13,6 +13,7 @@ const initialState: CarReducer = {
     currency: "",
     images: [],
     price: "",
+    author: "",
   },
   lastStatus: CarActionStatuses.CREATE_CAR_NOT_TRIGGERED_YET,
 };

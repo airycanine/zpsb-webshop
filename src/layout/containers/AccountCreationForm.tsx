@@ -8,6 +8,7 @@ import { Reducers } from "../../store/reducers/reducers";
 import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
 import { Button, Card, Col, Form, InputGroup, Spinner } from "react-bootstrap";
 import "../../styles/accountCreationForm.css";
+import "../../styles/common.css";
 import { useHistory } from "react-router-dom";
 
 interface StateProps {
@@ -117,7 +118,7 @@ const AccountCreationForm = () => {
           <div className={"text-right"}>
             <Button
               size="lg"
-              className="col-md-2 h"
+              className="col-md-2 h button-for-spinner"
               variant="success"
               type="submit"
             >

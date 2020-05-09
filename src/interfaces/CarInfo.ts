@@ -5,6 +5,7 @@ export interface Car {
   currency: string;
   images: any[];
   price: number | "";
+  author: string | undefined;
 }
 
 export enum CarActionStatuses {
@@ -17,4 +18,10 @@ export enum CarActionStatuses {
 export interface CarReducer {
   car: Car;
   lastStatus: CarActionStatuses;
+}
+
+export interface CarOffer {
+  carInfo: Car;
+  featured: boolean;
+  liked: boolean;
 }
