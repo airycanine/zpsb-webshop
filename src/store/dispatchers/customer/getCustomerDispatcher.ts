@@ -1,6 +1,5 @@
 import { Dispatch } from "redux";
 import {
-  Customer,
   CustomerActionStatuses,
   CustomerCredentials,
 } from "../../../interfaces/CustomerInfo";
@@ -8,7 +7,6 @@ import axios from "axios";
 import { CustomerActionDispatch } from "../../reducers/customerReducer";
 import { API_ENDPOINT, CUSTOMERS_POSTFIX } from "../../../consts/endpoints";
 import { toastr } from "react-redux-toastr";
-import { history } from "../../../layout/components/historyRouter";
 
 export const getCustomer = (
   customerCredentials: CustomerCredentials,
@@ -16,11 +14,10 @@ export const getCustomer = (
 ) => {
   getCustomerPending(dispatch);
   axios
-    // @ts-ignore
     .get(`${API_ENDPOINT + CUSTOMERS_POSTFIX + "/"}`, {
       params: {
         email: customerCredentials.email,
-        password: " s",
+        password: customerCredentials.password,
       },
     })
     .then((response: any) => {

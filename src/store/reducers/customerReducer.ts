@@ -33,6 +33,13 @@ export const customerReducer: Reducer<
         loggedIn: true,
         lastStatus: CustomerActionStatuses.CREATE_CUSTOMER_SUCCESSFUL,
       };
+
+    case CustomerActionStatuses.LOG_CUSTOMER_OUT:
+      return {
+        ...state,
+        loggedIn: false,
+        lastStatus: action.type,
+      };
     default:
       return { ...state, lastStatus: action.type };
   }

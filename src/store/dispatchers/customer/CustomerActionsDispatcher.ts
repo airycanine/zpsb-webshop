@@ -1,7 +1,12 @@
 import { Dispatch } from "redux";
-import { Customer } from "../../../interfaces/CustomerInfo";
+import {
+  Customer,
+  CustomerCredentials,
+} from "../../../interfaces/CustomerInfo";
 import { CustomerActionDispatch } from "../../reducers/customerReducer";
 import { createCustomer } from "./createCustomerDispatcher";
+import { getCustomer } from "./getCustomerDispatcher";
+import { logCustomerOut } from "./logoutCustomerDispatcher";
 
 export class CustomerActionsDispatcher {
   private readonly dispatch: Dispatch<CustomerActionDispatch>;
@@ -12,5 +17,13 @@ export class CustomerActionsDispatcher {
 
   createCustomer = (customer: Customer, logInAfterCreation: boolean) => {
     createCustomer(customer, logInAfterCreation, this.dispatch);
+  };
+
+  logCustomerIn = (customerCredentials: CustomerCredentials) => {
+    getCustomer(customerCredentials, this.dispatch);
+  };
+
+  logCustomerOut = () => {
+    logCustomerOut(this.dispatch);
   };
 }

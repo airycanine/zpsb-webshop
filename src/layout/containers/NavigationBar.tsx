@@ -8,8 +8,8 @@ import VerticallyCenteredModal from "../components/verticallyCenteredModal";
 import LoginForm from "./LoginForm";
 import { Link } from "react-router-dom";
 import { Pages } from "../../consts/Pages";
-import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
 import CarCreationForm from "./CarCreationForm";
+import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
 
 interface StateProps {
   customerReducer: CustomerReducer;
@@ -74,7 +74,13 @@ const NavigationBar = () => {
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item id="nav-dropdown-item">
-                <Button>Log out</Button>
+                <Button
+                  onClick={() => {
+                    customerActionsDispatcher.logCustomerOut();
+                  }}
+                >
+                  Log out
+                </Button>
               </NavDropdown.Item>
             </NavDropdown>
           ) : (

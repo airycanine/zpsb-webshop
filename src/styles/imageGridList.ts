@@ -26,5 +26,9 @@ export const useStyles = makeStyles((theme: Theme) =>
     gridListTile: {
       borderRadius: "8px",
     },
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: "#fff",
+    },
   })
 );

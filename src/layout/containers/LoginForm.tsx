@@ -1,11 +1,13 @@
-import React, { useEffect, useImperativeHandle } from "react";
+import React, { FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CustomerReducer } from "../../interfaces/CustomerInfo";
+import {
+  CustomerCredentials,
+  CustomerReducer,
+} from "../../interfaces/CustomerInfo";
 import { Reducers } from "../../store/reducers/reducers";
 import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
-import CustomStepper from "../components/customStepper";
-import { Button, Form, Nav } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { Pages } from "../../consts/Pages";
 
 interface StateProps {
@@ -28,24 +30,60 @@ const LoginForm = ({ hideModal }: LoginFormProps) => {
     useDispatch()
   );
 
+  const [customerCredentials, setCustomerCredentials] = useState<
+    CustomerCredentials
+  >({ email: "", password: "" });
+
   return (
     <div className="user-creation-form">
       {/*<CustomStepper />*/}
-      <Form>
+      <Form
+        onSubmit={(event: FormEvent) => {
+          event.preventDefault();
+        }}
+      >
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
+          <Form.Control
+            value={customerCredentials.email}
+            onChange={(event) =>
+              setCustomerCredentials({
+                ...customerCredentials,
+                email: event.target.value,
+              })
+            }
+            type="email"
+            placeholder="Enter email"
+          />
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
           </Form.Text>
         </Form.Group>
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
+          <Form.Control
+            value={customerCredentials.password}
+            onChange={(event) =>
+              setCustomerCredentials({
+                ...customerCredentials,
+                password: event.target.value,
+              })
+            }
+            type="password"
+            placeholder="Password"
+          />
         </Form.Group>
 
         <div className="text-right float-right">
-          <Button size="lg" variant="outline-success" type="submit">
+          <Button
+            onClick={() => {
+              customerActionsDispatcher.logCustomerIn(customerCredentials);
+              // hideModal();
+            }}
+            size="lg"
+            variant="outline-success"
+            type="submit"
+          >
             Login
           </Button>
         </div>

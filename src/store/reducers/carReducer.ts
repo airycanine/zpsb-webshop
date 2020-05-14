@@ -2,7 +2,7 @@ import { Action, Reducer } from "redux";
 import { Car, CarActionStatuses, CarReducer } from "../../interfaces/CarInfo";
 
 export interface CarActionDispatch extends Action<CarActionStatuses> {
-  payload: Partial<Car>;
+  payload: Partial<Car> | Partial<Car[]>;
 }
 
 const initialState: CarReducer = {

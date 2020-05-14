@@ -39,7 +39,7 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
 
   useEffect(() => {
     if (carReducer.lastStatus === CarActionStatuses.CREATE_CAR_SUCCESSFUL) {
-      carActionsDispatcher.resetStatus();
+      carActionsDispatcher.resetCreateStatus();
       hideModal();
     }
   }, [carReducer.car]);

@@ -4,6 +4,7 @@ import { API_ENDPOINT, CARS_POSTFIX } from "../../../consts/endpoints";
 import { toastr } from "react-redux-toastr";
 import { Car, CarActionStatuses } from "../../../interfaces/CarInfo";
 import { CarActionDispatch } from "../../reducers/carReducer";
+import { getCars } from "./getCarsDispatcher";
 
 export const createCar = (car: Car, dispatch: Dispatch<CarActionDispatch>) => {
   createCarPending(dispatch);
@@ -11,6 +12,7 @@ export const createCar = (car: Car, dispatch: Dispatch<CarActionDispatch>) => {
     .post(`${API_ENDPOINT + CARS_POSTFIX + "/"}`, car)
     .then((response) => {
       createCarSuccess(response.data, dispatch);
+      getCars(dispatch);
       toastr.success("Success", "Car offer created!");
     })
     .catch((error) => {
