@@ -17,6 +17,8 @@
     "mdbreact": "^4.26.0",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
+    "react-blur": "^0.6.0",
+    "react-blur-image": "^1.0.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
     "react-image": "^2.4.0",

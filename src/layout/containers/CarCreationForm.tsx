@@ -1,14 +1,12 @@
 import React, { FormEvent, useEffect, useState } from "react";
 import { Button, Col, Form, Spinner } from "react-bootstrap";
 import CurrencyDropdown from "../components/currencyDropdown";
-import MultipleImagesUploader from "../components/imageUploader";
 import { useDispatch, useSelector } from "react-redux";
 import { Reducers } from "../../store/reducers/reducers";
 import { CarActionsDispatcher } from "../../store/dispatchers/car/CarActionsDispatcher";
 import { Car, CarActionStatuses, CarReducer } from "../../interfaces/CarInfo";
 import "../../styles/common.css";
 import { CustomerReducer } from "../../interfaces/CustomerInfo";
-import Img from "react-image";
 
 interface CarCreationFormProps {
   hideModal: Function;

@@ -8,8 +8,9 @@ import { getCars } from "./getCarsDispatcher";
 
 export const updateCar = (car: Car, dispatch: Dispatch<CarActionDispatch>) => {
   updateCarPending(dispatch);
+  console.log(car);
   axios
-    .put(`${API_ENDPOINT + CARS_POSTFIX + "/"}`, car)
+    .put(`${API_ENDPOINT + CARS_POSTFIX}/${car.licenceNumber}`, car)
     .then((response) => {
       updateCarSuccess(response.data, dispatch);
       getCars(dispatch);

@@ -1,12 +1,12 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../../styles/App.css";
 import NavigationBar from "../containers/NavigationBar";
-import LoginForm from "../containers/LoginForm";
-import AccountCreationForm from "../containers/AccountCreationForm";
+import CustomerCreationForm from "../containers/CustomerCreationForm";
 import ReduxToastr from "react-redux-toastr";
 import { Pages } from "../../consts/Pages";
 import CarOffersList from "../containers/CarOffersList";
+
 const AppRouter = () => {
   return (
     <>
@@ -14,7 +14,7 @@ const AppRouter = () => {
         <NavigationBar />
         <Switch>
           <Route path={Pages.REGISTER_FORM}>
-            <AccountCreationForm />
+            <CustomerCreationForm />
           </Route>
           <Route path={Pages.CARS}>
             <CarOffersList />

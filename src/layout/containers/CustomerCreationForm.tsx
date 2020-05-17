@@ -15,7 +15,15 @@ interface StateProps {
   customerReducer: CustomerReducer;
 }
 
-const AccountCreationForm = () => {
+interface AccountCreationFormProps {
+  onRegisterSuccess?: Function;
+  routeToCarsOnSuccess?: boolean;
+}
+
+const CustomerCreationForm = ({
+  onRegisterSuccess = () => {},
+  routeToCarsOnSuccess = true,
+}: AccountCreationFormProps) => {
   let history = useHistory();
   const { customerReducer } = useSelector<Reducers, StateProps>(
     (state: Reducers) => {
@@ -32,7 +40,11 @@ const AccountCreationForm = () => {
   const [customer, setCustomer] = useState(customerReducer.customer);
 
   useEffect(() => {
-    customerReducer.loggedIn && history.push("/home");
+    customerReducer.loggedIn && onRegisterSuccess();
+
+    if (routeToCarsOnSuccess) {
+      customerReducer.loggedIn && history.push("/cars");
+    }
   }, [customerReducer.loggedIn]);
 
   return (
@@ -138,4 +150,4 @@ const AccountCreationForm = () => {
   );
 };
 
-export default AccountCreationForm;
+export default CustomerCreationForm;

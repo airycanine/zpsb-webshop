@@ -18,11 +18,11 @@ import StarIcon from "@material-ui/icons/Star";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import { Backdrop, CircularProgress, IconButton } from "@material-ui/core";
 import VerticallyCenteredModal from "../components/verticallyCenteredModal";
-import { Button } from "react-bootstrap";
 import { Customer } from "../../interfaces/CustomerInfo";
 import { createLikedCarKey } from "../../util/carUtils";
 import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
 import { toastr } from "react-redux-toastr";
+import CarBuyStepper from "../components/carBuyStepper";
 
 interface PropsFromStore {
   carsReducer: CarsReducer;
@@ -73,7 +73,7 @@ const CarOffersList = () => {
       const carsOffers: CarOffer[] = carsReducer.cars.map((car) => {
         return {
           carInfo: car,
-          featured: false,
+          featured: true,
           liked: false,
         };
       });
@@ -96,27 +96,9 @@ const CarOffersList = () => {
           onHide={() => {
             setModalShown(false);
           }}
-          size={"sm"}
+          size={"lg"}
         >
-          <div>Model: {selectedCarOffer.carInfo.model}</div>
-          <div>Brand: {selectedCarOffer.carInfo.brand}</div>
-          <div>
-            Price: {selectedCarOffer.carInfo.price}{" "}
-            {selectedCarOffer.carInfo.currency}
-          </div>
-          <div>Seller: {selectedCarOffer.carInfo.seller}</div>
-          <div className="text-right float-right mt-2">
-            <Button
-              onClick={() => {
-                // hideModal();
-              }}
-              size="lg"
-              variant="outline-success"
-              type="submit"
-            >
-              Buy
-            </Button>
-          </div>
+          <CarBuyStepper selectedCar={selectedCarOffer.carInfo}></CarBuyStepper>
         </VerticallyCenteredModal>
       )}
 
@@ -132,13 +114,29 @@ const CarOffersList = () => {
                 setSelectedCarOffer(carOffer);
               }}
             >
-              <img
-                onClick={() => {
-                  setModalShown(true);
-                }}
-                src={carOffer.carInfo.images[0]}
-                alt={carOffer.carInfo.model}
-              />
+              {carOffer.carInfo.buyer ? (
+                <>
+                  <div className="bg-image">
+                    <img
+                      src={carOffer.carInfo.images[0]}
+                      alt={carOffer.carInfo.model}
+                    />
+                  </div>
+                  <div className="bg-text">
+                    <h1>Offer sold!</h1>
+                    <p>Contact seller</p>
+                  </div>
+                </>
+              ) : (
+                <img
+                  onClick={() => {
+                    setModalShown(true);
+                  }}
+                  src={carOffer.carInfo.images[0]}
+                  alt={carOffer.carInfo.model}
+                />
+              )}
+
               <GridListTileBar
                 title={`${carOffer.carInfo.model}, ${carOffer.carInfo.brand}, ${carOffer.carInfo.price}${carOffer.carInfo.currency}`}
                 titlePosition="top"

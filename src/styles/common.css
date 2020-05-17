@@ -1,4 +1,4 @@
 .button-for-spinner {
-    width: 200px;
+    max-width: 200px;
     height: 60px;
 }

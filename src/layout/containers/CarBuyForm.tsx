@@ -1,29 +1,42 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { Car } from "../../interfaces/CarInfo";
+import { Car, CarReducer } from "../../interfaces/CarInfo";
+import { useDispatch, useSelector } from "react-redux";
+import { Reducers } from "../../store/reducers/reducers";
+import { CarActionsDispatcher } from "../../store/dispatchers/car/CarActionsDispatcher";
+import { CustomerReducer } from "../../interfaces/CustomerInfo";
 
-const CarBuyForm = (selectedCar: Car) => {
+interface CarBuyFormProps {
+  selectedCar: Car;
+}
+interface PropsFromStore {
+  carReducer: CarReducer;
+  customerReducer: CustomerReducer;
+}
+const CarBuyForm = ({ selectedCar }: CarBuyFormProps) => {
+  const { carReducer, customerReducer } = useSelector<Reducers, PropsFromStore>(
+    (state: Reducers) => {
+      return {
+        carReducer: state.carReducer,
+        customerReducer: state.customerReducer,
+      };
+    }
+  );
+  const carActionsDispatcher = new CarActionsDispatcher(useDispatch());
+
   return (
-    <>
-      <div>Model: {selectedCar.model}</div>
-      <div>Brand: {selectedCar.brand}</div>
-      <div>
-        Price: {selectedCar.price} {selectedCar.currency}
-      </div>
-      <div>Seller: {selectedCar.seller}</div>
-      <div className="text-right float-right mt-2">
-        <Button
-          onClick={() => {
-            // hideModal();
-          }}
-          size="lg"
-          variant="outline-success"
-          type="submit"
-        >
-          Buy
-        </Button>
-      </div>
-    </>
+    <div>
+      <Button
+        onClick={() => {
+          carActionsDispatcher.buyCar({
+            ...selectedCar,
+            buyer: customerReducer.customer.email,
+          });
+        }}
+      >
+        Buy
+      </Button>
+    </div>
   );
 };
 
