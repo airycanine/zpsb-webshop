@@ -13,7 +13,8 @@ const initialState: CarReducer = {
     currency: "",
     images: [],
     price: "",
-    author: "",
+    seller: "",
+    buyer: "",
   },
   lastStatus: CarActionStatuses.CREATE_CAR_NOT_TRIGGERED_YET,
 };
@@ -28,6 +29,12 @@ export const carReducer: Reducer<CarReducer, CarActionDispatch> = (
         ...state,
         car: action.payload,
         lastStatus: CarActionStatuses.CREATE_CAR_SUCCESSFUL,
+      };
+    case CarActionStatuses.UPDATE_CAR_SUCCESSFUL:
+      return {
+        ...state,
+        car: action.payload,
+        lastStatus: CarActionStatuses.UPDATE_CAR_SUCCESSFUL,
       };
     default:
       return { ...state, lastStatus: action.type };

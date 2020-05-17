@@ -5,7 +5,8 @@ export interface Car {
   currency: string;
   images: any[];
   price: number | "";
-  author: string | undefined;
+  seller: string | undefined;
+  buyer: string | undefined;
 }
 
 export enum CarActionStatuses {
@@ -13,6 +14,10 @@ export enum CarActionStatuses {
   CREATE_CAR_SUCCESSFUL = "CREATE_CAR_SUCCESSFUL",
   CREATE_CAR_FAILED = "CREATE_CAR_FAILED",
   CREATE_CAR_NOT_TRIGGERED_YET = "CREATE_CAR_NOT_TRIGGERED_YET",
+  UPDATE_CAR_PENDING = "UPDATE_CAR_PENDING",
+  UPDATE_CAR_SUCCESSFUL = "UPDATE_CAR_SUCCESSFUL",
+  UPDATE_CAR_FAILED = "UPDATE_CAR_FAILED",
+  UPDATE_CAR_NOT_TRIGGERED_YET = "UPDATE_CAR_NOT_TRIGGERED_YET",
   GET_CARS_PENDING = "GET_CARS_PENDING",
   GET_CARS_SUCCESSFUL = "GET_CARS_SUCCESSFUL",
   GET_CARS_FAILED = "GET_CARS_FAILED",
@@ -32,5 +37,4 @@ export interface CarsReducer {
 export interface CarOffer {
   carInfo: Car;
   featured: boolean;
-  liked: boolean;
 }

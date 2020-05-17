@@ -20,6 +20,7 @@
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
     "react-image": "^2.4.0",
+    "react-image-file-resizer": "^0.2.3",
     "react-images-upload": "^1.2.8",
     "react-js-stepper": "^1.2.6",
     "react-lazy-load-image-component": "^1.4.3",

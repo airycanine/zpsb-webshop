@@ -10,7 +10,13 @@ export interface CustomerActionDispatch extends Action<CustomerActionStatuses> {
 }
 
 const initialState: CustomerReducer = {
-  customer: { firstName: "", lastName: "", email: "" },
+  customer: {
+    firstName: "",
+    lastName: "",
+    email: "",
+    offers: [],
+    likedCars: [],
+  },
   lastStatus: CustomerActionStatuses.CREATE_CUSTOMER_NOT_TRIGGERED_YET,
   loggedIn: false,
 };
@@ -40,6 +46,15 @@ export const customerReducer: Reducer<
         loggedIn: false,
         lastStatus: action.type,
       };
+
+    case CustomerActionStatuses.UPDATE_CUSTOMER_SUCCESSFUL: {
+      return {
+        ...state,
+        customer: action.payload,
+        loggedIn: true,
+        lastStatus: CustomerActionStatuses.UPDATE_CUSTOMER_SUCCESSFUL,
+      };
+    }
     default:
       return { ...state, lastStatus: action.type };
   }

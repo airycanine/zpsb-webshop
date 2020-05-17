@@ -7,6 +7,8 @@ import { Reducers } from "../../store/reducers/reducers";
 import { CarActionsDispatcher } from "../../store/dispatchers/car/CarActionsDispatcher";
 import { Car, CarActionStatuses, CarReducer } from "../../interfaces/CarInfo";
 import "../../styles/common.css";
+import { CustomerReducer } from "../../interfaces/CustomerInfo";
+import Img from "react-image";
 
 interface CarCreationFormProps {
   hideModal: Function;
@@ -14,25 +16,28 @@ interface CarCreationFormProps {
 
 interface PropsFromStore {
   carReducer: CarReducer;
+  customerReducer: CustomerReducer;
 }
 
 const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
-  const { carReducer } = useSelector<Reducers, PropsFromStore>(
+  const { carReducer, customerReducer } = useSelector<Reducers, PropsFromStore>(
     (state: Reducers) => {
       return {
         carReducer: state.carReducer,
+        customerReducer: state.customerReducer,
       };
     }
   );
   const carActionsDispatcher = new CarActionsDispatcher(useDispatch());
   const [car, setCar] = useState<Car>({
     brand: "",
-    currency: "",
+    currency: "PLN",
     images: [],
     licenceNumber: "",
     model: "",
     price: "",
-    author: "",
+    seller: customerReducer.customer.email,
+    buyer: "",
   });
 
   const [lastImageUrl, setLastImageUrl] = useState("");
@@ -111,13 +116,14 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
               placeholder="Url to picture"
             />
           </Form.Group>
+          <img width={100} height={100} src={lastImageUrl}></img>
         </Form.Row>
 
-        <MultipleImagesUploader
-          onUpload={(image: any) =>
-            setCar({ ...car, images: [...car.images, image] })
-          }
-        ></MultipleImagesUploader>
+        {/*<MultipleImagesUploader*/}
+        {/*  onUpload={(image: any) =>*/}
+        {/*    setCar({ ...car, images: [...car.images, image] })*/}
+        {/*  }*/}
+        {/*></MultipleImagesUploader>*/}
         <div className="text-right float-right mt-4">
           <Button
             className="button-for-spinner"

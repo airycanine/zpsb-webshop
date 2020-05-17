@@ -1,6 +1,8 @@
 import { createStyles, Theme } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
+const windowHeight = window.innerHeight;
+
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -13,7 +15,7 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     gridList: {
       width: "80%",
-      height: 800,
+      height: `${windowHeight - windowHeight / 10}px`,
     },
     titleBar: {
       background:

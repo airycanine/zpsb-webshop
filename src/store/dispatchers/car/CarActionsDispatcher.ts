@@ -1,10 +1,9 @@
 import { Dispatch } from "redux";
-import { Customer } from "../../../interfaces/CustomerInfo";
-import { CustomerActionDispatch } from "../../reducers/customerReducer";
 import { CarActionDispatch } from "../../reducers/carReducer";
 import { createCar } from "./createCarDispatcher";
 import { Car, CarActionStatuses } from "../../../interfaces/CarInfo";
 import { getCars } from "./getCarsDispatcher";
+import { updateCar } from "./updateCarDispatcher";
 
 export class CarActionsDispatcher {
   private readonly dispatch: Dispatch<CarActionDispatch>;
@@ -14,6 +13,8 @@ export class CarActionsDispatcher {
   }
 
   createCar = (car: Car) => createCar(car, this.dispatch);
+
+  updateCar = (car: Car) => updateCar(car, this.dispatch);
 
   getCars = () => getCars(this.dispatch);
 

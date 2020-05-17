@@ -52,37 +52,54 @@ const NavigationBar = () => {
             <NavDropdown.Item id="nav-dropdown-item">
               <Link to={Pages.CARS}>Show cars </Link>
             </NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item id="nav-dropdown-item">
-              <Button
-                variant="outline-success"
-                onClick={() => setCarModalShown(true)}
-              >
-                Add car
-              </Button>
-            </NavDropdown.Item>
+            {customerReducer.loggedIn && (
+              <>
+                <NavDropdown.Divider />
+
+                <NavDropdown.Item id="nav-dropdown-item">
+                  <Button
+                    variant="outline-success"
+                    onClick={() => {
+                      setCarModalShown(true);
+                    }}
+                  >
+                    Add car
+                  </Button>
+                </NavDropdown.Item>
+              </>
+            )}
           </NavDropdown>
         </Nav>
         <div className="mr-lg-5">
           {customerReducer.loggedIn ? (
-            <NavDropdown title="Account" id="basic-nav-dropdown">
-              <NavDropdown.Item id="nav-dropdown-item">
-                <Link to={Pages.ACCOUNT_INFORMATION}>Information</Link>
-              </NavDropdown.Item>
-              <NavDropdown.Item id="nav-dropdown-item">
-                <Link to={Pages.ACCOUNT_OFFERS}>Your offers</Link>
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item id="nav-dropdown-item">
-                <Button
-                  onClick={() => {
-                    customerActionsDispatcher.logCustomerOut();
-                  }}
-                >
-                  Log out
-                </Button>
-              </NavDropdown.Item>
-            </NavDropdown>
+            <>
+              <NavDropdown title="Account" id="basic-nav-dropdown">
+                <NavDropdown.Item id="nav-dropdown-item">
+                  <Link to={Pages.ACCOUNT_INFORMATION}>Information</Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item id="nav-dropdown-item">
+                  <Link to={Pages.ACCOUNT_OFFERS}>Your offers</Link>
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item id="nav-dropdown-item">
+                  <Button
+                    onClick={() => {
+                      customerActionsDispatcher.logCustomerOut();
+                    }}
+                  >
+                    Log out
+                  </Button>
+                </NavDropdown.Item>
+              </NavDropdown>
+              <VerticallyCenteredModal
+                title={"Add your car offer"}
+                show={carModalShown}
+                size={"lg"}
+                onHide={() => setCarModalShown(false)}
+              >
+                <CarCreationForm hideModal={setCarModalShown} />
+              </VerticallyCenteredModal>
+            </>
           ) : (
             <Form>
               <Button
@@ -99,14 +116,6 @@ const NavigationBar = () => {
                 onHide={() => setLoginModalShown(false)}
               >
                 <LoginForm hideModal={setLoginModalShown} />
-              </VerticallyCenteredModal>
-              <VerticallyCenteredModal
-                title={"Add your car offer"}
-                show={carModalShown}
-                size={"lg"}
-                onHide={() => setCarModalShown(false)}
-              >
-                <CarCreationForm hideModal={setCarModalShown} />
               </VerticallyCenteredModal>
             </Form>
           )}

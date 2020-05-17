@@ -21,7 +21,7 @@ export const getCustomer = (
       },
     })
     .then((response: any) => {
-      getCustomerSuccess(customerCredentials, dispatch);
+      getCustomerSuccess(response.data, dispatch);
       toastr.success("Logged in", "Welcome!");
     })
     .catch((error: any) => {
