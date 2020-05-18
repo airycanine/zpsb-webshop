@@ -5,6 +5,7 @@ import Step from "@material-ui/core/Step";
 import StepButton from "@material-ui/core/StepButton";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { toastr } from "react-redux-toastr";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,6 +32,7 @@ interface CustomizableStepperProps {
   getStepContent: Function;
   activeStep: number;
   setActiveStep: Function;
+  loggedIn: boolean;
 }
 
 const CustomizableStepper = ({
@@ -38,6 +40,7 @@ const CustomizableStepper = ({
   activeStep,
   setActiveStep,
   getStepContent,
+  loggedIn,
 }: CustomizableStepperProps) => {
   const classes = useStyles();
   const [completed, setCompleted] = React.useState(new Set<number>());
@@ -89,7 +92,14 @@ const CustomizableStepper = ({
   };
 
   const handleStep = (step: number) => () => {
-    setActiveStep(step);
+    if (!loggedIn && step == steps.length - 1) {
+      toastr.warning(
+        "Warning",
+        "You need to be logged in to buy car. Register first."
+      );
+    } else {
+      setActiveStep(step);
+    }
   };
 
   const handleReset = () => {

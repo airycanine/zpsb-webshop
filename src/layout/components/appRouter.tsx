@@ -6,6 +6,7 @@ import CustomerCreationForm from "../containers/CustomerCreationForm";
 import ReduxToastr from "react-redux-toastr";
 import { Pages } from "../../consts/Pages";
 import CarOffersList from "../containers/CarOffersList";
+import CustomerOffers from "../containers/CustomerOffers";
 
 const AppRouter = () => {
   return (
@@ -18,6 +19,9 @@ const AppRouter = () => {
           </Route>
           <Route path={Pages.CARS}>
             <CarOffersList />
+          </Route>
+          <Route path={Pages.ACCOUNT_OFFERS}>
+            <CustomerOffers />
           </Route>
         </Switch>
       </Router>

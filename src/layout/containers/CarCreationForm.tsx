@@ -114,14 +114,14 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
               placeholder="Url to picture"
             />
           </Form.Group>
-          <img width={100} height={100} src={lastImageUrl}></img>
+          <img
+            className={"car-image"}
+            width={100}
+            height={100}
+            src={lastImageUrl}
+          ></img>
         </Form.Row>
 
-        {/*<MultipleImagesUploader*/}
-        {/*  onUpload={(image: any) =>*/}
-        {/*    setCar({ ...car, images: [...car.images, image] })*/}
-        {/*  }*/}
-        {/*></MultipleImagesUploader>*/}
         <div className="text-right float-right mt-4">
           <Button
             className="button-for-spinner"

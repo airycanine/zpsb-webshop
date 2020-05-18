@@ -23,6 +23,7 @@ import { createLikedCarKey } from "../../util/carUtils";
 import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
 import { toastr } from "react-redux-toastr";
 import CarBuyStepper from "../components/carBuyStepper";
+import { customerReducer } from "../../store/reducers/customerReducer";
 
 interface PropsFromStore {
   carsReducer: CarsReducer;
@@ -130,7 +131,11 @@ const CarOffersList = () => {
               ) : (
                 <img
                   onClick={() => {
-                    setModalShown(true);
+                    if (customer.email === carOffer.carInfo.seller) {
+                      toastr.warning("Sorry", "You can't buy your own car");
+                    } else {
+                      setModalShown(true);
+                    }
                   }}
                   src={carOffer.carInfo.images[0]}
                   alt={carOffer.carInfo.model}
