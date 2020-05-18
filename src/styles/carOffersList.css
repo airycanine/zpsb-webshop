@@ -17,7 +17,7 @@ img{
 .bg-text {
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-    color: white;
+    color: whitesmoke;
     font-weight: bold;
     border: 3px solid #f1f1f1;
     position: absolute;

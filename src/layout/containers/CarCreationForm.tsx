@@ -6,6 +6,7 @@ import { Reducers } from "../../store/reducers/reducers";
 import { CarActionsDispatcher } from "../../store/dispatchers/car/CarActionsDispatcher";
 import { Car, CarActionStatuses, CarReducer } from "../../interfaces/CarInfo";
 import "../../styles/common.css";
+import "../../styles/carCreationForm.css";
 import { CustomerReducer } from "../../interfaces/CustomerInfo";
 
 interface CarCreationFormProps {

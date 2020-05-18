@@ -103,7 +103,7 @@ const CarOffersList = () => {
         </VerticallyCenteredModal>
       )}
 
-      <GridList cellHeight={250} spacing={1} className={classes.gridList}>
+      <GridList cellHeight={250} spacing={10} className={classes.gridList}>
         {carOffers &&
           carOffers.map((carOffer, i) => (
             <GridListTile
@@ -124,8 +124,8 @@ const CarOffersList = () => {
                     />
                   </div>
                   <div className="bg-text">
-                    <h1>Offer sold!</h1>
-                    <p>Contact seller</p>
+                    <h1>Offer sold</h1>
+                    <p>cheers</p>
                   </div>
                 </>
               ) : (

@@ -11,7 +11,6 @@ export const useStyles = makeStyles((theme: Theme) =>
       flexWrap: "wrap",
       justifyContent: "space-around",
       overflow: "auto",
-      backgroundColor: theme.palette.background.paper,
     },
     gridList: {
       width: "80%",
