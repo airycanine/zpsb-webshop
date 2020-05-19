@@ -23,7 +23,6 @@ import { createLikedCarKey } from "../../util/carUtils";
 import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
 import { toastr } from "react-redux-toastr";
 import CarBuyStepper from "../components/carBuyStepper";
-import { customerReducer } from "../../store/reducers/customerReducer";
 
 interface PropsFromStore {
   carsReducer: CarsReducer;

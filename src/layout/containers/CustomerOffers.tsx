@@ -74,7 +74,10 @@ const CustomerOffers = () => {
     switch (shownOffers) {
       case OffersGroups.ACTIVE: {
         return activeOffers.length != 0 ? (
-          <CarCardStepper cars={activeOffers} />
+          <CarCardStepper
+            onButtonClick={carActionsDispatcher.deleteCar}
+            cars={activeOffers}
+          />
         ) : (
           ""
         );

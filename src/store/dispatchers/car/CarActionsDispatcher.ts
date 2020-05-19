@@ -5,6 +5,7 @@ import { Car, CarActionStatuses } from "../../../interfaces/CarInfo";
 import { getCars } from "./getCarsDispatcher";
 import { updateCar } from "./updateCarDispatcher";
 import { buyCar } from "./buyCarDispatcher";
+import { deleteCar } from "./deleteCarDispatcher";
 
 export class CarActionsDispatcher {
   private readonly dispatch: Dispatch<CarActionDispatch>;
@@ -20,6 +21,8 @@ export class CarActionsDispatcher {
   buyCar = (car: Car) => buyCar(car, this.dispatch);
 
   getCars = () => getCars(this.dispatch);
+
+  deleteCar = (car: Car) => deleteCar(car, this.dispatch);
 
   resetCreateStatus = () => {
     this.dispatch({

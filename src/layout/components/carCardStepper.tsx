@@ -9,6 +9,8 @@ import MobileStepper from "@material-ui/core/MobileStepper";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import { Button as BootstrapButton } from "react-bootstrap";
+
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import { Car } from "../../interfaces/CarInfo";
@@ -38,9 +40,10 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 interface CarCardStepperProps {
   cars: Car[];
+  onButtonClick?: Function;
 }
 
-const CarCardStepper = ({ cars }: CarCardStepperProps) => {
+const CarCardStepper = ({ onButtonClick, cars }: CarCardStepperProps) => {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -66,6 +69,16 @@ const CarCardStepper = ({ cars }: CarCardStepperProps) => {
             {cars[activeStep].currency}
           </div>
           <div>Licence number: {cars[activeStep].licenceNumber}</div>
+          {onButtonClick !== undefined && (
+            <BootstrapButton
+              onClick={() => onButtonClick(cars[activeStep])}
+              size="lg"
+              variant="danger"
+              className={"mt-3"}
+            >
+              Delete offer
+            </BootstrapButton>
+          )}
         </OfferInfoCard>
         <MobileStepper
           steps={maxSteps}
