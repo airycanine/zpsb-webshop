@@ -13,7 +13,11 @@ const AccountInfo = () => {
     };
   });
 
-  return <div>Elo</div>;
+  return (
+    <>
+      <div>{user.email}</div>
+    </>
+  );
 };
 
 export default AccountInfo;

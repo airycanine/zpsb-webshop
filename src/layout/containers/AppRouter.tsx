@@ -14,13 +14,17 @@ import { Customer } from "../../interfaces/CustomerInfo";
 
 interface PropsFromStore {
   user: Customer;
+  loggedIn: boolean;
 }
 const AppRouter = () => {
-  const { user } = useSelector<Reducers, PropsFromStore>((state: Reducers) => {
-    return {
-      user: state.customerReducer.customer,
-    };
-  });
+  const { user, loggedIn } = useSelector<Reducers, PropsFromStore>(
+    (state: Reducers) => {
+      return {
+        user: state.customerReducer.customer,
+        loggedIn: state.customerReducer.loggedIn,
+      };
+    }
+  );
   const [storageUser, setStorageUser] = useState(
     // @ts-ignore
     JSON.parse(localStorage.getItem("user"))
@@ -31,7 +35,11 @@ const AppRouter = () => {
   );
 
   useEffect(() => {
-    setAuthorized(storageUser && storageUser.email === user.email);
+    if (loggedIn) {
+      setAuthorized(true);
+    } else {
+      setAuthorized(storageUser && storageUser.email === user.email);
+    }
   }, [user]);
   return (
     <>

@@ -53,11 +53,9 @@ const NavigationBar = () => {
       </div>
       <Navbar.Collapse className="nicer-font" id="basic-navbar-nav ">
         <Nav className="mr-auto">
-          <Nav.Item>
-            <Nav.Link className="home" href="/">
-              Home
-            </Nav.Link>
-          </Nav.Item>
+          <Nav.Link className="home" href="/">
+            Home
+          </Nav.Link>
           <NavDropdown title="Cars" id="basic-nav-dropdown">
             <NavDropdown.Item id="nav-dropdown-item">
               <Link to={Pages.CARS}>Show cars </Link>
