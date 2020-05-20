@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Car, CarReducer } from "../../interfaces/CarInfo";
 import CustomizableStepper from "./customizableStepper";
 import CarInfoCard from "./carInfoCard";
-import CustomerCreationForm from "../containers/CustomerCreationForm";
+import CustomerRegistrationForm from "../containers/CustomerRegistrationForm";
 import CarBuyForm from "../containers/CarBuyForm";
 import { useSelector } from "react-redux";
 import { Reducers } from "../../store/reducers/reducers";
@@ -32,7 +32,7 @@ const CarBuyStepper = ({ selectedCar }: CarBuyStepperProps) => {
         return <CarInfoCard selectedCar={selectedCar}></CarInfoCard>;
       case 1:
         return (
-          <CustomerCreationForm
+          <CustomerRegistrationForm
             onRegisterSuccess={() => setActiveStep(activeStep + 1)}
           />
         );

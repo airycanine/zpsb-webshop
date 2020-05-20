@@ -63,7 +63,8 @@ const CarOffersList = () => {
     carActionsDispatcher.getCars();
     // @ts-ignore
     const cachedUser = JSON.parse(localStorage.getItem("user"));
-    if (cachedUser) {
+    if (!loggedIn && cachedUser) {
+      console.log(loggedIn);
       customerActionsDispatcher.logCustomerInWithToken(cachedUser);
     }
   }, []);

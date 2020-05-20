@@ -20,7 +20,7 @@ interface AccountCreationFormProps {
   routeToCarsOnSuccess?: boolean;
 }
 
-const CustomerCreationForm = ({
+const CustomerRegistrationForm = ({
   onRegisterSuccess = () => {},
   routeToCarsOnSuccess = true,
 }: AccountCreationFormProps) => {
@@ -39,6 +39,23 @@ const CustomerCreationForm = ({
 
   const [customer, setCustomer] = useState(customerReducer.customer);
 
+  const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event: {
+    currentTarget: any;
+    preventDefault: () => void;
+    stopPropagation: () => void;
+  }) => {
+    const form = event.currentTarget;
+    event.preventDefault();
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+    } else {
+      customerActionsDispatcher.createCustomer(customer, true);
+    }
+    setValidated(true);
+  };
+
   useEffect(() => {
     customerReducer.loggedIn && onRegisterSuccess();
 
@@ -50,12 +67,7 @@ const CustomerCreationForm = ({
   return (
     <Card className="account-creation-form">
       <Card.Body>
-        <Form
-          onSubmit={async (event: FormEvent) => {
-            event.preventDefault();
-            customerActionsDispatcher.createCustomer(customer, true);
-          }}
-        >
+        <Form onSubmit={handleSubmit} noValidate validated={validated}>
           <Form.Row>
             <Form.Group as={Col} controlId="formGridFirstName">
               <Form.Label>Forename</Form.Label>
@@ -65,7 +77,11 @@ const CustomerCreationForm = ({
                   setCustomer({ ...customer, firstName: event.target.value })
                 }
                 type="text"
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                First name is required.
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} controlId="formGridLastName">
               <Form.Label>Surname</Form.Label>
@@ -75,7 +91,11 @@ const CustomerCreationForm = ({
                   setCustomer({ ...customer, lastName: event.target.value })
                 }
                 type="text"
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                Last name is required.
+              </Form.Control.Feedback>
             </Form.Group>
           </Form.Row>
           <Form.Row>
@@ -92,7 +112,11 @@ const CustomerCreationForm = ({
                   }
                   type="email"
                   placeholder="Enter email"
+                  required
                 />
+                <Form.Control.Feedback type="invalid">
+                  Email is required.
+                </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>
 
@@ -105,7 +129,11 @@ const CustomerCreationForm = ({
                 }
                 type="password"
                 placeholder="Password"
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                Password is required.
+              </Form.Control.Feedback>
             </Form.Group>
           </Form.Row>
           <Form.Group controlId="formGridAddress1">
@@ -119,7 +147,11 @@ const CustomerCreationForm = ({
                 })
               }
               placeholder="1234 Main St"
+              required
             />
+            <Form.Control.Feedback type="invalid">
+              Street address is required.
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Row>
             <Form.Group as={Col} controlId="formGridCity">
@@ -132,7 +164,11 @@ const CustomerCreationForm = ({
                     address: { ...customer.address, city: event.target.value },
                   })
                 }
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                City is required.
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group as={Col} controlId="formGridState">
@@ -168,11 +204,19 @@ const CustomerCreationForm = ({
                   })
                 }
                 value={customer.address.zip}
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                Zip code is required.
+              </Form.Control.Feedback>
             </Form.Group>
           </Form.Row>
           <Form.Group id="formGridCheckbox">
-            <Form.Check type="checkbox" label="I agree" />
+            <Form.Check
+              type="checkbox"
+              label="I agree to everything"
+              required
+            />
           </Form.Group>
           <div className={"text-right"}>
             <Button
@@ -197,4 +241,4 @@ const CustomerCreationForm = ({
   );
 };
 
-export default CustomerCreationForm;
+export default CustomerRegistrationForm;

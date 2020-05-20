@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../../styles/App.css";
 import NavigationBar from "../containers/NavigationBar";
-import CustomerCreationForm from "../containers/CustomerCreationForm";
+import CustomerRegistrationForm from "./CustomerRegistrationForm";
 import ReduxToastr from "react-redux-toastr";
 import { Pages } from "../../consts/Pages";
 import CarOffersList from "../containers/CarOffersList";
@@ -52,7 +52,7 @@ const AppRouter = () => {
         <NavigationBar />
         <Switch>
           <Route path={Pages.REGISTER_FORM}>
-            <CustomerCreationForm />
+            <CustomerRegistrationForm />
           </Route>
           <Route path={Pages.CARS}>
             <CarOffersList />

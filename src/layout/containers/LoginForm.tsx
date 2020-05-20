@@ -14,6 +14,22 @@ const LoginForm = ({ hideModal }: LoginFormProps) => {
   const customerActionsDispatcher = new CustomerActionsDispatcher(
     useDispatch()
   );
+  const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event: {
+    currentTarget: any;
+    preventDefault: () => void;
+    stopPropagation: () => void;
+  }) => {
+    const form = event.currentTarget;
+    event.preventDefault();
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+    } else {
+      customerActionsDispatcher.logCustomerIn(customerCredentials);
+    }
+    setValidated(true);
+  };
 
   const [customerCredentials, setCustomerCredentials] = useState<
     CustomerCredentials
@@ -21,12 +37,7 @@ const LoginForm = ({ hideModal }: LoginFormProps) => {
 
   return (
     <div className="user-creation-form">
-      {/*<CustomStepper />*/}
-      <Form
-        onSubmit={(event: FormEvent) => {
-          event.preventDefault();
-        }}
-      >
+      <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
@@ -39,7 +50,11 @@ const LoginForm = ({ hideModal }: LoginFormProps) => {
             }
             type="email"
             placeholder="Enter email"
+            required
           />
+          <Form.Control.Feedback type="invalid">
+            Please provide your email.
+          </Form.Control.Feedback>
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
           </Form.Text>
@@ -56,19 +71,15 @@ const LoginForm = ({ hideModal }: LoginFormProps) => {
             }
             type="password"
             placeholder="Password"
+            required
           />
+          <Form.Control.Feedback type="invalid">
+            Please provide your password.
+          </Form.Control.Feedback>
         </Form.Group>
 
         <div className="text-right float-right">
-          <Button
-            onClick={() => {
-              customerActionsDispatcher.logCustomerIn(customerCredentials);
-              // hideModal();
-            }}
-            size="lg"
-            variant="outline-success"
-            type="submit"
-          >
+          <Button size="lg" variant="outline-success" type="submit">
             Login
           </Button>
         </div>
