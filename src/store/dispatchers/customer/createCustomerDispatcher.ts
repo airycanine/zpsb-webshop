@@ -34,7 +34,7 @@ export const createCustomer = (
     })
     .catch((error) => {
       createCustomerFailed(dispatch);
-      toastr.error("Error", "Customer can't be created.");
+      toastr.error("Error", error.response.data.message);
     });
 };
 

@@ -26,7 +26,7 @@ export const getCustomer = (
     })
     .catch((error: any) => {
       getCustomerFailed(dispatch);
-      toastr.error("Error", `Can't log in`);
+      toastr.error("Error", error.response.data);
     });
 };
 
