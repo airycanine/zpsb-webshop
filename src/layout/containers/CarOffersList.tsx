@@ -59,7 +59,6 @@ const CarOffersList = () => {
   const [selectedCarOffer, setSelectedCarOffer] = useState<CarOffer>(
     carOffers[0]
   );
-
   useEffect(() => {
     carActionsDispatcher.getCars();
   }, []);
@@ -86,97 +85,109 @@ const CarOffersList = () => {
 
   return (
     <div className={classes.root}>
-      <Backdrop className={classes.backdrop} open={backdropOpened}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      {selectedCarOffer && (
-        <VerticallyCenteredModal
-          title={"Car info"}
-          show={modalShown}
-          onHide={() => {
-            setModalShown(false);
-          }}
-          size={"lg"}
-        >
-          <CarBuyStepper selectedCar={selectedCarOffer.carInfo}></CarBuyStepper>
-        </VerticallyCenteredModal>
-      )}
-
-      <GridList cellHeight={250} spacing={10} className={classes.gridList}>
-        {carOffers &&
-          carOffers.map((carOffer, i) => (
-            <GridListTile
-              className={classes.gridListTile}
-              key={carOffer.carInfo.images[0]}
-              cols={carOffer.featured ? 2 : 1}
-              rows={carOffer.featured ? 2 : 1}
-              onClick={() => {
-                setSelectedCarOffer(carOffer);
+      {carsReducer.cars.length > 0 ? (
+        <>
+          <Backdrop className={classes.backdrop} open={backdropOpened}>
+            <CircularProgress color="inherit" />
+          </Backdrop>
+          {selectedCarOffer && (
+            <VerticallyCenteredModal
+              title={"Car info"}
+              show={modalShown}
+              onHide={() => {
+                setModalShown(false);
               }}
+              size={"lg"}
             >
-              {carOffer.carInfo.buyer ? (
-                <>
-                  <div className="bg-image">
+              <CarBuyStepper
+                selectedCar={selectedCarOffer.carInfo}
+              ></CarBuyStepper>
+            </VerticallyCenteredModal>
+          )}
+          <GridList cellHeight={250} spacing={10} className={classes.gridList}>
+            {carOffers &&
+              carOffers.map((carOffer, i) => (
+                <GridListTile
+                  className={classes.gridListTile}
+                  key={carOffer.carInfo.images[0]}
+                  cols={carOffer.featured ? 2 : 1}
+                  rows={carOffer.featured ? 2 : 1}
+                  onClick={() => {
+                    setSelectedCarOffer(carOffer);
+                  }}
+                >
+                  {carOffer.carInfo.buyer ? (
+                    <>
+                      <div className="bg-image">
+                        <img
+                          src={carOffer.carInfo.images[0]}
+                          alt={carOffer.carInfo.model}
+                        />
+                      </div>
+                      <div className="bg-text">
+                        <h1>Offer sold</h1>
+                        <p>cheers</p>
+                      </div>
+                    </>
+                  ) : (
                     <img
+                      onClick={() => {
+                        if (customer.email === carOffer.carInfo.seller) {
+                          toastr.warning("Sorry", "You can't buy your own car");
+                        } else {
+                          setModalShown(true);
+                        }
+                      }}
                       src={carOffer.carInfo.images[0]}
                       alt={carOffer.carInfo.model}
                     />
-                  </div>
-                  <div className="bg-text">
-                    <h1>Offer sold</h1>
-                    <p>cheers</p>
-                  </div>
-                </>
-              ) : (
-                <img
-                  onClick={() => {
-                    if (customer.email === carOffer.carInfo.seller) {
-                      toastr.warning("Sorry", "You can't buy your own car");
-                    } else {
-                      setModalShown(true);
-                    }
-                  }}
-                  src={carOffer.carInfo.images[0]}
-                  alt={carOffer.carInfo.model}
-                />
-              )}
+                  )}
 
-              <GridListTileBar
-                title={`${carOffer.carInfo.model}, ${carOffer.carInfo.brand}, ${carOffer.carInfo.price}${carOffer.carInfo.currency}`}
-                titlePosition="top"
-                actionIcon={
-                  <IconButton
-                    aria-label={`star`}
-                    className={classes.icon}
-                    onClick={() => {
-                      loggedIn
-                        ? customerActionsDispatcher.updateCustomer({
-                            ...customer,
-                            likedCars: [
-                              ...resolveLikedCars(customer, carOffer.carInfo),
-                            ],
-                          })
-                        : toastr.error(
-                            "Error",
-                            "You must be logged in to 'like' car"
-                          );
-                    }}
-                  >
-                    {customer.likedCars &&
-                    customer.likedCars.includes(
-                      createLikedCarKey(carOffer.carInfo) as string
-                    ) ? (
-                      <StarIcon />
-                    ) : (
-                      <StarBorderIcon />
-                    )}
-                  </IconButton>
-                }
-                actionPosition="left"
-              />
-            </GridListTile>
-          ))}
-      </GridList>
+                  <GridListTileBar
+                    title={`${carOffer.carInfo.model}, ${carOffer.carInfo.brand}, ${carOffer.carInfo.price}${carOffer.carInfo.currency}`}
+                    titlePosition="top"
+                    actionIcon={
+                      <IconButton
+                        aria-label={`star`}
+                        className={classes.icon}
+                        onClick={() => {
+                          loggedIn
+                            ? customerActionsDispatcher.updateCustomer({
+                                ...customer,
+                                likedCars: [
+                                  ...resolveLikedCars(
+                                    customer,
+                                    carOffer.carInfo
+                                  ),
+                                ],
+                              })
+                            : toastr.error(
+                                "Error",
+                                "You must be logged in to 'like' car"
+                              );
+                        }}
+                      >
+                        {customer.likedCars &&
+                        customer.likedCars.includes(
+                          createLikedCarKey(carOffer.carInfo) as string
+                        ) ? (
+                          <StarIcon />
+                        ) : (
+                          <StarBorderIcon />
+                        )}
+                      </IconButton>
+                    }
+                    actionPosition="left"
+                  />
+                </GridListTile>
+              ))}
+          </GridList>
+        </>
+      ) : (
+        <>
+          <h1>Pusto!</h1>
+        </>
+      )}
     </div>
   );
 };

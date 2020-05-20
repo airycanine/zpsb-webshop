@@ -14,6 +14,13 @@ const initialState: CustomerReducer = {
     firstName: "",
     lastName: "",
     email: "",
+    password: "",
+    address: {
+      city: "",
+      street: "",
+      zip: "",
+      voivodeship: "",
+    },
     offers: [],
     likedCars: [],
   },

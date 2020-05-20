@@ -7,6 +7,7 @@ import axios from "axios";
 import { CustomerActionDispatch } from "../../reducers/customerReducer";
 import { API_ENDPOINT, CUSTOMERS_POSTFIX } from "../../../consts/endpoints";
 import { toastr } from "react-redux-toastr";
+import authHeader from "../../../jwt/jwtHeaderGetter";
 
 export const updateCustomer = (
   customer: Customer,
@@ -14,7 +15,9 @@ export const updateCustomer = (
 ) => {
   updateCustomerPending(dispatch);
   axios
-    .put(`${API_ENDPOINT + CUSTOMERS_POSTFIX}/${customer.email}`, customer)
+    .put(`${API_ENDPOINT + CUSTOMERS_POSTFIX}/${customer.email}`, customer, {
+      headers: authHeader(),
+    })
     .then((response) => {
       updateCustomerSuccess(customer, dispatch);
     })

@@ -5,7 +5,11 @@ import {
 } from "../../../interfaces/CustomerInfo";
 import axios from "axios";
 import { CustomerActionDispatch } from "../../reducers/customerReducer";
-import { API_ENDPOINT, CUSTOMERS_POSTFIX } from "../../../consts/endpoints";
+import {
+  API_ENDPOINT,
+  CUSTOMERS_POSTFIX,
+  LOG_IN_ENDPOINT,
+} from "../../../consts/endpoints";
 import { toastr } from "react-redux-toastr";
 
 export const getCustomer = (
@@ -14,19 +18,15 @@ export const getCustomer = (
 ) => {
   getCustomerPending(dispatch);
   axios
-    .get(`${API_ENDPOINT + CUSTOMERS_POSTFIX + "/"}`, {
-      params: {
-        email: customerCredentials.email,
-        password: customerCredentials.password,
-      },
-    })
+    .post(`${API_ENDPOINT + LOG_IN_ENDPOINT + "/"}`, customerCredentials)
     .then((response: any) => {
       getCustomerSuccess(response.data, dispatch);
+      localStorage.setItem("user", JSON.stringify(response.data));
       toastr.success("Logged in", "Welcome!");
     })
     .catch((error: any) => {
       getCustomerFailed(dispatch);
-      toastr.error("Error", "An error occured while logging in..");
+      toastr.error("Error", `Can't log in`);
     });
 };
 

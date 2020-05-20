@@ -2,8 +2,17 @@ export interface Customer {
   email: string;
   firstName: string;
   lastName: string;
+  address: Address;
+  password: string;
   offers: string[];
   likedCars: string[];
+}
+
+export interface Address {
+  city: string;
+  street: string;
+  voivodeship: string;
+  zip: string;
 }
 
 export interface CustomerCredentials {

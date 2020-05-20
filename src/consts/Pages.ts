@@ -1,5 +1,5 @@
 export enum Pages {
-  HOME = "/home",
+  HOME = "/cars",
   CARS = "/cars",
   CARS_ADD = "/cars/new",
   USERS = "/users",

@@ -5,11 +5,14 @@ import { toastr } from "react-redux-toastr";
 import { Car, CarActionStatuses } from "../../../interfaces/CarInfo";
 import { CarActionDispatch } from "../../reducers/carReducer";
 import { getCars } from "./getCarsDispatcher";
+import authHeader from "../../../jwt/jwtHeaderGetter";
 
 export const buyCar = (car: Car, dispatch: Dispatch<CarActionDispatch>) => {
   buyCarPending(dispatch);
   axios
-    .put(`${API_ENDPOINT + CARS_POSTFIX}/${car.licenceNumber}`, car)
+    .put(`${API_ENDPOINT + CARS_POSTFIX}/${car.licenceNumber}`, car, {
+      headers: authHeader(),
+    })
     .then((response) => {
       buyCarSuccess(response.data, dispatch);
       getCars(dispatch);

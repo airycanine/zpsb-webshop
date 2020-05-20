@@ -5,10 +5,13 @@ import {
 } from "../../../interfaces/CustomerInfo";
 import axios from "axios";
 import { CustomerActionDispatch } from "../../reducers/customerReducer";
-import { API_ENDPOINT, CUSTOMERS_POSTFIX } from "../../../consts/endpoints";
+import {
+  API_ENDPOINT,
+  CUSTOMERS_POSTFIX,
+  REGISTER_ENDPOINT,
+} from "../../../consts/endpoints";
 import { toastr } from "react-redux-toastr";
 import { getCustomer } from "./getCustomerDispatcher";
-import { useHistory } from "react-router-dom";
 
 export const createCustomer = (
   customer: Customer,
@@ -17,11 +20,14 @@ export const createCustomer = (
 ) => {
   createCustomerPending(dispatch);
   axios
-    .post(`${API_ENDPOINT + CUSTOMERS_POSTFIX + "/"}`, customer)
+    .post(`${API_ENDPOINT + REGISTER_ENDPOINT}`, customer)
     .then((response) => {
       createCustomerSuccess(customer, dispatch);
       if (logInAfterCreation) {
-        getCustomer({ email: customer.email, password: "test" }, dispatch);
+        getCustomer(
+          { email: customer.email, password: customer.password },
+          dispatch
+        );
       } else {
         toastr.success("Account created", "Welcome on board!");
       }

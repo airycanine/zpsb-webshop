@@ -98,30 +98,77 @@ const CustomerCreationForm = ({
 
             <Form.Group as={Col} controlId="formGridPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
+              <Form.Control
+                value={customer.password}
+                onChange={(event) =>
+                  setCustomer({ ...customer, password: event.target.value })
+                }
+                type="password"
+                placeholder="Password"
+              />
             </Form.Group>
           </Form.Row>
           <Form.Group controlId="formGridAddress1">
             <Form.Label>Address</Form.Label>
-            <Form.Control placeholder="1234 Main St" />
+            <Form.Control
+              value={customer.address.street}
+              onChange={(event) =>
+                setCustomer({
+                  ...customer,
+                  address: { ...customer.address, street: event.target.value },
+                })
+              }
+              placeholder="1234 Main St"
+            />
           </Form.Group>
           <Form.Row>
             <Form.Group as={Col} controlId="formGridCity">
               <Form.Label>City</Form.Label>
-              <Form.Control />
+              <Form.Control
+                value={customer.address.city}
+                onChange={(event) =>
+                  setCustomer({
+                    ...customer,
+                    address: { ...customer.address, city: event.target.value },
+                  })
+                }
+              />
             </Form.Group>
 
             <Form.Group as={Col} controlId="formGridState">
               <Form.Label>Voivodeship</Form.Label>
-              <Form.Control as="select" value="Choose...">
-                <option>Choose...</option>
+              <Form.Control
+                as="select"
+                onChange={(event) =>
+                  setCustomer({
+                    ...customer,
+                    address: {
+                      ...customer.address,
+                      voivodeship: event.target.value,
+                    },
+                  })
+                }
+                value={customer.address.voivodeship}
+              >
                 <option>Zachodniopomorskie</option>
+                <option>Different</option>
               </Form.Control>
             </Form.Group>
 
             <Form.Group as={Col} controlId="formGridZip">
               <Form.Label>Zip</Form.Label>
-              <Form.Control />
+              <Form.Control
+                onChange={(event) =>
+                  setCustomer({
+                    ...customer,
+                    address: {
+                      ...customer.address,
+                      zip: event.target.value,
+                    },
+                  })
+                }
+                value={customer.address.zip}
+              />
             </Form.Group>
           </Form.Row>
           <Form.Group id="formGridCheckbox">

@@ -1,31 +1,16 @@
 import React, { FormEvent, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  CustomerCredentials,
-  CustomerReducer,
-} from "../../interfaces/CustomerInfo";
-import { Reducers } from "../../store/reducers/reducers";
+import { useDispatch } from "react-redux";
+import { CustomerCredentials } from "../../interfaces/CustomerInfo";
 import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Pages } from "../../consts/Pages";
-
-interface StateProps {
-  customerReducer: CustomerReducer;
-}
 
 interface LoginFormProps {
   hideModal: Function;
 }
 
 const LoginForm = ({ hideModal }: LoginFormProps) => {
-  const { customerReducer } = useSelector<Reducers, StateProps>(
-    (state: Reducers) => {
-      return {
-        customerReducer: state.customerReducer,
-      };
-    }
-  );
   const customerActionsDispatcher = new CustomerActionsDispatcher(
     useDispatch()
   );
