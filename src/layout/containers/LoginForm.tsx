@@ -37,7 +37,7 @@ const LoginForm = ({ hideModal }: LoginFormProps) => {
 
   return (
     <div className="user-creation-form">
-      <Form onSubmit={handleSubmit}>
+      <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control

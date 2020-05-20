@@ -41,6 +41,25 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
 
   const [lastImageUrl, setLastImageUrl] = useState("");
 
+  const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event: {
+    currentTarget: any;
+    preventDefault: () => void;
+    stopPropagation: () => void;
+  }) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+      event.preventDefault();
+    } else {
+      const images = [];
+      images.push(lastImageUrl);
+      carActionsDispatcher.createCar({ ...car, images });
+    }
+    setValidated(true);
+  };
+
   useEffect(() => {
     if (carReducer.lastStatus === CarActionStatuses.CREATE_CAR_SUCCESSFUL) {
       carActionsDispatcher.resetCreateStatus();
@@ -50,14 +69,7 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
 
   return (
     <div className="car-creation-form">
-      <Form
-        onSubmit={(event: FormEvent) => {
-          event.preventDefault();
-          const images = [];
-          images.push(lastImageUrl);
-          carActionsDispatcher.createCar({ ...car, images });
-        }}
-      >
+      <Form onSubmit={handleSubmit} noValidate validated={validated}>
         <Form.Row>
           <Form.Group as={Col} controlId="formGridModel">
             <Form.Label>Model</Form.Label>
@@ -68,12 +80,15 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
               }
               type="text"
               placeholder="125p"
+              required
             />
+            <Form.Control.Feedback type="invalid">sup</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group as={Col} controlId="formGridCompany">
             <Form.Label>Brand</Form.Label>
             <Form.Control
+              required
               value={car.brand}
               onChange={(event) =>
                 setCar({ ...car, brand: event.target.value })
@@ -81,18 +96,21 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
               type="text"
               placeholder="Polski Fiat"
             />
+            <Form.Control.Feedback type="invalid">sup</Form.Control.Feedback>
           </Form.Group>
         </Form.Row>
         <Form.Row>
           <Form.Group as={Col} controlId="formGridLicence">
             <Form.Label>Licence Number</Form.Label>
             <Form.Control
+              required
               value={car.licenceNumber}
               onChange={(event) =>
                 setCar({ ...car, licenceNumber: event.target.value })
               }
               placeholder="ZS 12345A"
             />
+            <Form.Control.Feedback type="invalid">sup</Form.Control.Feedback>
           </Form.Group>
         </Form.Row>
         <Form.Row>
@@ -110,10 +128,12 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
           <Form.Group as={Col} controlId="formGridImage">
             <Form.Label>Link to picture</Form.Label>
             <Form.Control
+              required
               value={lastImageUrl}
               onChange={(event) => setLastImageUrl(event.target.value)}
               placeholder="Url to picture"
             />
+            <Form.Control.Feedback type="invalid">sup</Form.Control.Feedback>
           </Form.Group>
           <img
             className={"car-image"}
