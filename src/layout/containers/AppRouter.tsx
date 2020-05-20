@@ -11,17 +11,21 @@ import AccountInfo from "../containers/AccountInfo";
 import { useSelector } from "react-redux";
 import { Reducers } from "../../store/reducers/reducers";
 import { Customer } from "../../interfaces/CustomerInfo";
+import { Roles } from "../../consts/Roles";
+import UsersList from "./UsersList";
 
 interface PropsFromStore {
   user: Customer;
   loggedIn: boolean;
+  roles: string[];
 }
 const AppRouter = () => {
-  const { user, loggedIn } = useSelector<Reducers, PropsFromStore>(
+  const { user, loggedIn, roles } = useSelector<Reducers, PropsFromStore>(
     (state: Reducers) => {
       return {
         user: state.customerReducer.customer,
         loggedIn: state.customerReducer.loggedIn,
+        roles: state.customerReducer.roles,
       };
     }
   );
@@ -41,6 +45,7 @@ const AppRouter = () => {
       setAuthorized(storageUser && storageUser.email === user.email);
     }
   }, [user]);
+
   return (
     <>
       <Router>
@@ -52,14 +57,19 @@ const AppRouter = () => {
           <Route path={Pages.CARS}>
             <CarOffersList />
           </Route>
-          {authorized === true && (
+          {authorized && (
             <Route path={Pages.ACCOUNT_OFFERS}>
               <CustomerOffers />
             </Route>
           )}
-          {authorized === true && (
+          {authorized && (
             <Route path={Pages.ACCOUNT_INFORMATION}>
               <AccountInfo />
+            </Route>
+          )}
+          {authorized && roles.includes(Roles.ADMIN) && (
+            <Route path={Pages.USERS_LIST}>
+              <UsersList />
             </Route>
           )}
           <Route path={"/"}>

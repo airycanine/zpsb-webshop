@@ -27,7 +27,9 @@ export const loginCustomer = (
     })
     .catch((error: any) => {
       getCustomerFailed(dispatch);
-      toastr.error("Error", error.response.data);
+      if (error.response) {
+        toastr.error("Error", error.response.data);
+      }
     });
 };
 
@@ -44,7 +46,7 @@ const getCustomerSuccess = (
   dispatch: Dispatch<CustomerActionDispatch>
 ) => {
   dispatch({
-    type: CustomerActionStatuses.GET_CUSTOMER_SUCCESSFUL,
+    type: CustomerActionStatuses.LOG_CUSTOMER_IN,
     payload: customerCredentials,
   });
 };

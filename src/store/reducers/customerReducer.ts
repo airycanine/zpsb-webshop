@@ -26,6 +26,7 @@ const initialState: CustomerReducer = {
   },
   lastStatus: CustomerActionStatuses.CREATE_CUSTOMER_NOT_TRIGGERED_YET,
   loggedIn: false,
+  roles: [],
 };
 
 export const customerReducer: Reducer<
@@ -33,18 +34,19 @@ export const customerReducer: Reducer<
   CustomerActionDispatch
 > = (state: CustomerReducer | undefined = initialState, action: any) => {
   switch (action.type) {
-    case CustomerActionStatuses.CREATE_CUSTOMER_SUCCESSFUL:
+    case CustomerActionStatuses.REGISTER_CUSTOMER:
       return {
         ...state,
         customer: action.payload,
-        lastStatus: CustomerActionStatuses.CREATE_CUSTOMER_SUCCESSFUL,
+        lastStatus: CustomerActionStatuses.REGISTER_CUSTOMER,
       };
-    case CustomerActionStatuses.GET_CUSTOMER_SUCCESSFUL:
+    case CustomerActionStatuses.LOG_CUSTOMER_IN:
       return {
         ...state,
         customer: action.payload,
         loggedIn: true,
-        lastStatus: CustomerActionStatuses.CREATE_CUSTOMER_SUCCESSFUL,
+        lastStatus: CustomerActionStatuses.LOG_CUSTOMER_IN,
+        roles: action.payload.roles,
       };
 
     case CustomerActionStatuses.LOG_CUSTOMER_OUT:

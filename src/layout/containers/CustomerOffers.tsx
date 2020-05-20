@@ -59,10 +59,11 @@ const CustomerOffers = () => {
           car.seller === state.customerReducer.customer.email &&
           car.buyer !== ""
       ),
-      activeOffers: state.carsReducer.cars.filter(
-        (car) =>
+      activeOffers: state.carsReducer.cars.filter((car) => {
+        return (
           car.seller === state.customerReducer.customer.email && car.buyer == ""
-      ),
+        );
+      }),
     };
   });
 

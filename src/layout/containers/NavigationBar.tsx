@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Form,
@@ -18,6 +18,7 @@ import { Pages } from "../../consts/Pages";
 import CarCreationForm from "./CarCreationForm";
 import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
 import "../../styles/navbar.css";
+import { Roles } from "../../consts/Roles";
 
 interface StateProps {
   customerReducer: CustomerReducer;
@@ -34,10 +35,16 @@ const NavigationBar = () => {
       };
     }
   );
+  const [storageUser, setStorageUser] = useState(
+    // @ts-ignore
+    JSON.parse(localStorage.getItem("user"))
+  );
 
   const customerActionsDispatcher = new CustomerActionsDispatcher(
     useDispatch()
   );
+  console.log("navbar", customerReducer.roles);
+  console.log(customerReducer.roles.includes("ADMIN"));
 
   return (
     <Navbar bg="light" expand="lg">
@@ -81,6 +88,11 @@ const NavigationBar = () => {
         <div className="mr-lg-5">
           {customerReducer.loggedIn ? (
             <>
+              {customerReducer.roles.includes(Roles.ADMIN) && (
+                <Nav.Link className="home">
+                  <Link to={Pages.USERS_LIST}>Users</Link>
+                </Nav.Link>
+              )}
               <NavDropdown title="Account" id="basic-nav-dropdown">
                 <NavDropdown.Item id="nav-dropdown-item">
                   <Link to={Pages.ACCOUNT_INFORMATION}>Information</Link>
@@ -90,13 +102,16 @@ const NavigationBar = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item id="nav-dropdown-item">
-                  <Button
-                    onClick={() => {
-                      customerActionsDispatcher.logCustomerOut();
-                    }}
-                  >
-                    Log out
-                  </Button>
+                  <Link to={Pages.CARS}>
+                    <Button
+                      onClick={() => {
+                        customerActionsDispatcher.logCustomerOut();
+                        localStorage.removeItem("user");
+                      }}
+                    >
+                      Log out
+                    </Button>
+                  </Link>
                 </NavDropdown.Item>
               </NavDropdown>
               <VerticallyCenteredModal

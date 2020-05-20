@@ -43,7 +43,7 @@ const createCustomerSuccess = (
   dispatch: Dispatch<CustomerActionDispatch>
 ) => {
   dispatch({
-    type: CustomerActionStatuses.CREATE_CUSTOMER_SUCCESSFUL,
+    type: CustomerActionStatuses.REGISTER_CUSTOMER,
     payload: customer,
   });
 };

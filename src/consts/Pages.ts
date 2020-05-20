@@ -7,4 +7,5 @@ export enum Pages {
   ACCOUNT_INFORMATION = "/account/information",
   ACCOUNT_OFFERS = "/account/offers",
   REGISTER_FORM = "/register-form",
+  USERS_LIST = "/users-list",
 }
