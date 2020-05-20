@@ -5,7 +5,10 @@ import {
 } from "../../../interfaces/CustomerInfo";
 import { CustomerActionDispatch } from "../../reducers/customerReducer";
 import { createCustomer } from "./createCustomerDispatcher";
-import { getCustomer } from "./getCustomerDispatcher";
+import {
+  loginCustomer,
+  loginCustomerWithToken,
+} from "./loginCustomerDispatcher";
 import { logCustomerOut } from "./logoutCustomerDispatcher";
 import { updateCustomer } from "./updateCustomerDispatcher";
 
@@ -25,7 +28,11 @@ export class CustomerActionsDispatcher {
   };
 
   logCustomerIn = (customerCredentials: CustomerCredentials) => {
-    getCustomer(customerCredentials, this.dispatch);
+    loginCustomer(customerCredentials, this.dispatch);
+  };
+
+  logCustomerInWithToken = (customer: Customer) => {
+    loginCustomerWithToken(customer, this.dispatch);
   };
 
   logCustomerOut = () => {

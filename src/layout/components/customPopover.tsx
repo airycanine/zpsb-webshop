@@ -15,7 +15,7 @@ const CustomPopover = ({ children, title, content }: PopoverProps) => {
     </Popover>
   );
   return (
-    <OverlayTrigger trigger="click" placement="right" overlay={popover}>
+    <OverlayTrigger trigger="click" placement="bottom-end" overlay={popover}>
       {children}
     </OverlayTrigger>
   );

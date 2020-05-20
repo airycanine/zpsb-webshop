@@ -1,5 +1,6 @@
 import { Dispatch } from "redux";
 import {
+  Customer,
   CustomerActionStatuses,
   CustomerCredentials,
 } from "../../../interfaces/CustomerInfo";
@@ -12,7 +13,7 @@ import {
 } from "../../../consts/endpoints";
 import { toastr } from "react-redux-toastr";
 
-export const getCustomer = (
+export const loginCustomer = (
   customerCredentials: CustomerCredentials,
   dispatch: Dispatch<CustomerActionDispatch>
 ) => {
@@ -28,6 +29,14 @@ export const getCustomer = (
       getCustomerFailed(dispatch);
       toastr.error("Error", error.response.data);
     });
+};
+
+export const loginCustomerWithToken = (
+  customer: Customer,
+  dispatch: Dispatch<CustomerActionDispatch>
+) => {
+  getCustomerSuccess(customer, dispatch);
+  toastr.success("Logged in", "Welcome!");
 };
 
 const getCustomerSuccess = (

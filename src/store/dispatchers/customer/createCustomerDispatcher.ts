@@ -11,7 +11,7 @@ import {
   REGISTER_ENDPOINT,
 } from "../../../consts/endpoints";
 import { toastr } from "react-redux-toastr";
-import { getCustomer } from "./getCustomerDispatcher";
+import { loginCustomer } from "./loginCustomerDispatcher";
 
 export const createCustomer = (
   customer: Customer,
@@ -24,7 +24,7 @@ export const createCustomer = (
     .then((response) => {
       createCustomerSuccess(customer, dispatch);
       if (logInAfterCreation) {
-        getCustomer(
+        loginCustomer(
           { email: customer.email, password: customer.password },
           dispatch
         );

@@ -1,5 +1,12 @@
 import React from "react";
-import { Button, Form, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import {
+  Button,
+  Form,
+  Nav,
+  Navbar,
+  NavDropdown,
+  NavLink,
+} from "react-bootstrap";
 import { CustomerReducer } from "../../interfaces/CustomerInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { Reducers } from "../../store/reducers/reducers";
@@ -10,6 +17,7 @@ import { Link } from "react-router-dom";
 import { Pages } from "../../consts/Pages";
 import CarCreationForm from "./CarCreationForm";
 import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
+import "../../styles/navbar.css";
 
 interface StateProps {
   customerReducer: CustomerReducer;
@@ -35,19 +43,21 @@ const NavigationBar = () => {
     <Navbar bg="light" expand="lg">
       <div className="ml-5">
         <Navbar.Toggle aria-controls="basic-navbar-nav " />
-        <Link to="/">
+        <Link to="/cars">
           <CustomPopover title={"Jakub Walat"} content={`ZPSB final project`}>
             <Navbar.Brand>
-              <Navbar.Brand>Car Webshop</Navbar.Brand>
+              <Navbar.Brand className="webshop">Car Webshop</Navbar.Brand>
             </Navbar.Brand>
           </CustomPopover>
         </Link>
       </div>
-      <Navbar.Collapse id="basic-navbar-nav ">
+      <Navbar.Collapse className="nicer-font" id="basic-navbar-nav ">
         <Nav className="mr-auto">
-          <Nav.Link>
-            <Link to={Pages.HOME}>Home</Link>
-          </Nav.Link>
+          <Nav.Item>
+            <Nav.Link className="home" href="/">
+              Home
+            </Nav.Link>
+          </Nav.Item>
           <NavDropdown title="Cars" id="basic-nav-dropdown">
             <NavDropdown.Item id="nav-dropdown-item">
               <Link to={Pages.CARS}>Show cars </Link>

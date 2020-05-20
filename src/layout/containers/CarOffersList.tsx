@@ -61,6 +61,11 @@ const CarOffersList = () => {
   );
   useEffect(() => {
     carActionsDispatcher.getCars();
+    // @ts-ignore
+    const cachedUser = JSON.parse(localStorage.getItem("user"));
+    if (cachedUser) {
+      customerActionsDispatcher.logCustomerInWithToken(cachedUser);
+    }
   }, []);
 
   useEffect(() => {
