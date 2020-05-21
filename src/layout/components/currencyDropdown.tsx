@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   Dropdown,
   DropdownButton,
+  Form,
   FormControl,
   InputGroup,
 } from "react-bootstrap";
@@ -34,7 +35,12 @@ const CurrencyDropdown = ({
         aria-label="price"
         aria-describedby="basic-addon2"
         value={price}
-        onChange={(event) => setPrice(event.target.value)}
+        onChange={(event) => {
+          if (!isNaN(Number(event.target.value))) {
+            setPrice(event.target.value);
+          }
+        }}
+        required
       />
       <DropdownButton
         as={InputGroup.Append}

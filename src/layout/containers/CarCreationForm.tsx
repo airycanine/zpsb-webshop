@@ -42,6 +42,7 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
   const [lastImageUrl, setLastImageUrl] = useState("");
 
   const [validated, setValidated] = useState(false);
+  const [correctImage, setCorrectImage] = useState(false);
 
   const handleSubmit = (event: {
     currentTarget: any;
@@ -49,7 +50,7 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
     stopPropagation: () => void;
   }) => {
     const form = event.currentTarget;
-    if (form.checkValidity() === false) {
+    if (form.checkValidity() === false || correctImage) {
       event.stopPropagation();
       event.preventDefault();
     } else {
@@ -82,7 +83,9 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
               placeholder="125p"
               required
             />
-            <Form.Control.Feedback type="invalid">sup</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              Model is required.
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group as={Col} controlId="formGridCompany">
@@ -96,7 +99,9 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
               type="text"
               placeholder="Polski Fiat"
             />
-            <Form.Control.Feedback type="invalid">sup</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              Brand is required.
+            </Form.Control.Feedback>
           </Form.Group>
         </Form.Row>
         <Form.Row>
@@ -110,7 +115,9 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
               }
               placeholder="ZS 12345A"
             />
-            <Form.Control.Feedback type="invalid">sup</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              Licence plate no. is required.
+            </Form.Control.Feedback>
           </Form.Group>
         </Form.Row>
         <Form.Row>
@@ -130,15 +137,23 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
             <Form.Control
               required
               value={lastImageUrl}
-              onChange={(event) => setLastImageUrl(event.target.value)}
+              onChange={(event) => {
+                setLastImageUrl(event.target.value);
+                setCorrectImage(true);
+              }}
               placeholder="Url to picture"
             />
-            <Form.Control.Feedback type="invalid">sup</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              Image url is required.
+            </Form.Control.Feedback>
           </Form.Group>
           <img
             className={"car-image"}
             width={100}
             height={100}
+            onError={(error) => {
+              setCorrectImage(false);
+            }}
             src={lastImageUrl}
           ></img>
         </Form.Row>
