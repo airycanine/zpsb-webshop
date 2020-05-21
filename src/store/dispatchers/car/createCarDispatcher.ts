@@ -20,7 +20,7 @@ export const createCar = (car: Car, dispatch: Dispatch<CarActionDispatch>) => {
     })
     .catch((error) => {
       createCarFailed(dispatch);
-      toastr.error("Error", "Car can't be added.");
+      toastr.error("Error", error.response.data);
     });
 };
 
