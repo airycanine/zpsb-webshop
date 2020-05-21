@@ -79,7 +79,6 @@ const CustomerRegistrationForm = ({
                 type="text"
                 required
               />
-
               <Form.Control.Feedback type="invalid">
                 First name is required.
               </Form.Control.Feedback>

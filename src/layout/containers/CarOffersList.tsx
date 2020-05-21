@@ -23,6 +23,7 @@ import { createLikedCarKey } from "../../util/carUtils";
 import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
 import { toastr } from "react-redux-toastr";
 import CarBuyStepper from "../components/carBuyStepper";
+import CarImage from "../components/carImage";
 
 interface PropsFromStore {
   carsReducer: CarsReducer;
@@ -64,7 +65,6 @@ const CarOffersList = () => {
     // @ts-ignore
     const cachedUser = JSON.parse(localStorage.getItem("user"));
     if (!loggedIn && cachedUser) {
-      console.log(loggedIn);
       customerActionsDispatcher.logCustomerInWithToken(cachedUser);
     }
   }, []);
@@ -124,16 +124,7 @@ const CarOffersList = () => {
                 >
                   {carOffer.carInfo.buyer ? (
                     <>
-                      <div className="bg-image">
-                        <img
-                          src={carOffer.carInfo.images[0]}
-                          alt={carOffer.carInfo.model}
-                        />
-                      </div>
-                      <div className="bg-text">
-                        <h1>Offer sold</h1>
-                        <p>cheers</p>
-                      </div>
+                      <CarImage car={carOffer.carInfo} />
                     </>
                   ) : (
                     <img

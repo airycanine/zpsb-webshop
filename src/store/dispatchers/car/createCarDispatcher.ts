@@ -9,8 +9,6 @@ import authHeader from "../../../jwt/jwtHeaderGetter";
 
 export const createCar = (car: Car, dispatch: Dispatch<CarActionDispatch>) => {
   createCarPending(dispatch);
-  const header = authHeader();
-  console.log(header);
   axios
     .post(`${API_ENDPOINT + CARS_POSTFIX + "/"}`, car, {
       headers: authHeader(),

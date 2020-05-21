@@ -43,9 +43,6 @@ const NavigationBar = () => {
   const customerActionsDispatcher = new CustomerActionsDispatcher(
     useDispatch()
   );
-  console.log("navbar", customerReducer.roles);
-  console.log(customerReducer.roles.includes("ADMIN"));
-
   return (
     <Navbar bg="light" expand="lg">
       <div className="ml-5">

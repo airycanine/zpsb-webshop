@@ -42,24 +42,6 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
   const [lastImageUrl, setLastImageUrl] = useState("");
 
   const [validated, setValidated] = useState(false);
-  const [correctImage, setCorrectImage] = useState(false);
-
-  const handleSubmit = (event: {
-    currentTarget: any;
-    preventDefault: () => void;
-    stopPropagation: () => void;
-  }) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false || correctImage) {
-      event.stopPropagation();
-      event.preventDefault();
-    } else {
-      const images = [];
-      images.push(lastImageUrl);
-      carActionsDispatcher.createCar({ ...car, images });
-    }
-    setValidated(true);
-  };
 
   useEffect(() => {
     if (carReducer.lastStatus === CarActionStatuses.CREATE_CAR_SUCCESSFUL) {
@@ -67,6 +49,23 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
       hideModal();
     }
   }, [carReducer.car]);
+
+  const handleSubmit = (event: {
+    currentTarget: any;
+    preventDefault: () => void;
+    stopPropagation: () => void;
+  }) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+    } else {
+      const images = [];
+      images.push(lastImageUrl);
+      carActionsDispatcher.createCar({ ...car, images });
+    }
+    setValidated(true);
+  };
 
   return (
     <div className="car-creation-form">
@@ -135,25 +134,18 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
           <Form.Group as={Col} controlId="formGridImage">
             <Form.Label>Link to picture</Form.Label>
             <Form.Control
-              required
               value={lastImageUrl}
               onChange={(event) => {
                 setLastImageUrl(event.target.value);
-                setCorrectImage(true);
               }}
               placeholder="Url to picture"
+              required
             />
-            <Form.Control.Feedback type="invalid">
-              Image url is required.
-            </Form.Control.Feedback>
           </Form.Group>
           <img
             className={"car-image"}
             width={100}
             height={100}
-            onError={(error) => {
-              setCorrectImage(false);
-            }}
             src={lastImageUrl}
           ></img>
         </Form.Row>
