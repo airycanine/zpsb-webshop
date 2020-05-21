@@ -23,7 +23,6 @@ import { createLikedCarKey } from "../../util/carUtils";
 import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
 import { toastr } from "react-redux-toastr";
 import CarBuyStepper from "../components/carBuyStepper";
-import CarImage from "../components/carImage";
 
 interface PropsFromStore {
   carsReducer: CarsReducer;
@@ -124,7 +123,16 @@ const CarOffersList = () => {
                 >
                   {carOffer.carInfo.buyer ? (
                     <>
-                      <CarImage car={carOffer.carInfo} />
+                      <div className="bg-image">
+                        <img
+                          src={carOffer.carInfo.images[0]}
+                          alt={carOffer.carInfo.model}
+                        />
+                      </div>
+                      <div className="bg-text">
+                        <h1>Offer sold</h1>
+                        <p>cheers</p>
+                      </div>
                     </>
                   ) : (
                     <img
