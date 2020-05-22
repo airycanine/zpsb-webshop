@@ -11,7 +11,7 @@ import { on } from "cluster";
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    maxWidth: "100%",
   },
   media: {
     height: 140,

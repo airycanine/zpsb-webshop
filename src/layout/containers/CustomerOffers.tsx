@@ -22,6 +22,7 @@ interface PropsFromStore {
   boughtCars: Car[];
   soldCars: Car[];
   activeOffers: Car[];
+  likedCars: Car[];
 }
 
 const GreenRadio = withStyles({
@@ -45,10 +46,13 @@ const OrangeRadio = withStyles({
 })((props: RadioProps) => <Radio color="default" {...props} />);
 
 const CustomerOffers = () => {
-  const { activeOffers, boughtCars, soldCars, loggedIn } = useSelector<
-    Reducers,
-    PropsFromStore
-  >((state: Reducers) => {
+  const {
+    activeOffers,
+    boughtCars,
+    soldCars,
+    loggedIn,
+    likedCars,
+  } = useSelector<Reducers, PropsFromStore>((state: Reducers) => {
     return {
       loggedIn: state.customerReducer.loggedIn,
       boughtCars: state.carsReducer.cars.filter(
@@ -62,6 +66,11 @@ const CustomerOffers = () => {
       activeOffers: state.carsReducer.cars.filter((car) => {
         return (
           car.seller === state.customerReducer.customer.email && car.buyer == ""
+        );
+      }),
+      likedCars: state.carsReducer.cars.filter((car) => {
+        return state.customerReducer.customer.likedCars.includes(
+          car.licenceNumber
         );
       }),
     };
@@ -93,6 +102,13 @@ const CustomerOffers = () => {
       case OffersGroups.BOUGHT_CARS: {
         return boughtCars.length != 0 ? (
           <CarCardStepper cars={boughtCars}></CarCardStepper>
+        ) : (
+          ""
+        );
+      }
+      case OffersGroups.LIKED: {
+        return likedCars.length != 0 ? (
+          <CarCardStepper cars={likedCars}></CarCardStepper>
         ) : (
           ""
         );
@@ -156,6 +172,20 @@ const CustomerOffers = () => {
             label="Sold cars"
             labelPlacement="bottom"
             className={"sold-cars"}
+          />
+          <FormControlLabel
+            value="liked-cars"
+            control={
+              <Radio
+                onChange={() => {
+                  setShownOffers(OffersGroups.LIKED);
+                }}
+                color="primary"
+              />
+            }
+            label="Liked cars"
+            labelPlacement="top"
+            className={"bought-cars"}
           />
         </RadioGroup>
         {renderOffers()}
