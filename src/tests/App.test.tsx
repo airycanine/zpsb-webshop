@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import AppRouter from "../layout/components/appRouter";
+import AppRouter from "../layout/containers/AppRouter";
 
 test("renders learn react link", () => {
   const { getByText } = render(<AppRouter />);

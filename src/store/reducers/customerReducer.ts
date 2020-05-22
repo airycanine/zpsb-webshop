@@ -5,41 +5,66 @@ import {
   CustomerReducer,
 } from "../../interfaces/CustomerInfo";
 
-export interface DispatchAction extends Action<CustomerActionStatuses> {
+export interface CustomerActionDispatch extends Action<CustomerActionStatuses> {
   payload: Partial<Customer>;
 }
 
 const initialState: CustomerReducer = {
-  customer: { firstName: "", lastName: "", email: "" },
-  status: CustomerActionStatuses.CREATE_CUSTOMER_NOT_TRIGGERED_YET,
+  customer: {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    address: {
+      city: "",
+      street: "",
+      zip: "",
+      voivodeship: "",
+    },
+    offers: [],
+    likedCars: [],
+  },
+  lastStatus: CustomerActionStatuses.CREATE_CUSTOMER_NOT_TRIGGERED_YET,
   loggedIn: false,
+  roles: [],
 };
 
-export const customerReducer: Reducer<CustomerReducer, DispatchAction> = (
-  state: CustomerReducer | undefined = initialState,
-  action: any
-) => {
+export const customerReducer: Reducer<
+  CustomerReducer,
+  CustomerActionDispatch
+> = (state: CustomerReducer | undefined = initialState, action: any) => {
   switch (action.type) {
-    case CustomerActionStatuses.CREATE_CUSTOMER_PENDING: {
-      return {
-        ...state,
-        status: CustomerActionStatuses.CREATE_CUSTOMER_PENDING,
-      };
-    }
-
-    case CustomerActionStatuses.CREATE_CUSTOMER_SUCCESSFUL:
+    case CustomerActionStatuses.REGISTER_CUSTOMER:
       return {
         ...state,
         customer: action.payload,
-        status: CustomerActionStatuses.CREATE_CUSTOMER_SUCCESSFUL,
+        lastStatus: CustomerActionStatuses.REGISTER_CUSTOMER,
       };
-
-    case CustomerActionStatuses.CREATE_CUSTOMER_FAILED:
+    case CustomerActionStatuses.LOG_CUSTOMER_IN:
       return {
         ...state,
-        status: CustomerActionStatuses.CREATE_CUSTOMER_FAILED,
+        customer: action.payload,
+        loggedIn: true,
+        lastStatus: CustomerActionStatuses.LOG_CUSTOMER_IN,
+        roles: action.payload.roles,
       };
+
+    case CustomerActionStatuses.LOG_CUSTOMER_OUT:
+      return {
+        ...state,
+        loggedIn: false,
+        lastStatus: action.type,
+      };
+
+    case CustomerActionStatuses.UPDATE_CUSTOMER_SUCCESSFUL: {
+      return {
+        ...state,
+        customer: action.payload,
+        loggedIn: true,
+        lastStatus: CustomerActionStatuses.UPDATE_CUSTOMER_SUCCESSFUL,
+      };
+    }
     default:
-      return { ...state };
+      return { ...state, lastStatus: action.type };
   }
 };

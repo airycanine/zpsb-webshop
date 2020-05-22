@@ -1,0 +1,21 @@
+.account-offers{
+    color: wheat;
+}
+
+h1{
+    color: #ee6207;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+}
+
+.sold-cars{
+    color: #64b667;
+}
+
+.bought-cars{
+    color: #3f51b5
+}
+
+.active-offers{
+    color: #ee8607;
+}
