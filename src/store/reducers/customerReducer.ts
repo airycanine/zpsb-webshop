@@ -19,7 +19,7 @@ const initialState: CustomerReducer = {
       city: "",
       street: "",
       zip: "",
-      voivodeship: "",
+      voivodeship: "Zachodniopomorskie",
     },
     offers: [],
     likedCars: [],
