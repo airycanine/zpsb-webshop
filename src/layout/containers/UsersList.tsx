@@ -55,16 +55,18 @@ const UsersList = () => {
         size="sm"
       >
         <div className="text-center">
-          Delete car with regplate {selectedOffer?.licenceNumber}?
+          <div>Delete car with regplate {selectedOffer?.licenceNumber}?</div>
+          <Button
+            onClick={() => {
+              carActionsDispatcher.deleteCar(selectedOffer);
+              setModalShown(false);
+            }}
+            className="text-center mt-2"
+            variant="danger"
+          >
+            YES
+          </Button>
         </div>
-        <Button
-          onClick={() => {
-            carActionsDispatcher.deleteCar(selectedOffer);
-            setModalShown(false);
-          }}
-        >
-          YES
-        </Button>
       </VerticallyCenteredModal>
       <Table striped bordered hover>
         <thead>
@@ -93,13 +95,16 @@ const UsersList = () => {
                     .filter((car) => car.seller === customer.email)
                     .map((car) => (
                       <tr className="text-center">
-                        <td
-                          onClick={() => {
-                            setSelectedOffer(car);
-                            setModalShown(true);
-                          }}
-                        >
-                          {car.model}-{car.licenceNumber}
+                        <td>
+                          <Button
+                            variant="danger"
+                            onClick={() => {
+                              setSelectedOffer(car);
+                              setModalShown(true);
+                            }}
+                          >
+                            {car.model}-{car.licenceNumber}
+                          </Button>
                         </td>
                       </tr>
                     ))}
