@@ -11,13 +11,14 @@ import { toastr } from "react-redux-toastr";
 
 interface CarBuyStepperProps {
   selectedCar: Car;
+  onBuy: Function;
 }
 
 interface PropsFromStore {
   loggedIn: boolean;
 }
 
-const CarBuyStepper = ({ selectedCar }: CarBuyStepperProps) => {
+const CarBuyStepper = ({ selectedCar, onBuy }: CarBuyStepperProps) => {
   const [activeStep, setActiveStep] = useState(0);
   const { loggedIn } = useSelector<Reducers, PropsFromStore>(
     (state: Reducers) => {
@@ -37,7 +38,7 @@ const CarBuyStepper = ({ selectedCar }: CarBuyStepperProps) => {
           />
         );
       case 2:
-        return <CarBuyForm selectedCar={selectedCar} />;
+        return <CarBuyForm onBuy={onBuy} selectedCar={selectedCar} />;
       default:
         return "Unknown step";
     }

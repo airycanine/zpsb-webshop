@@ -54,6 +54,7 @@ export const customerReducer: Reducer<
         ...state,
         loggedIn: false,
         lastStatus: action.type,
+        customer: { ...initialState.customer },
       };
 
     case CustomerActionStatuses.UPDATE_CUSTOMER_SUCCESSFUL: {

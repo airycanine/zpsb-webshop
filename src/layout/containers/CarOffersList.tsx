@@ -106,6 +106,7 @@ const CarOffersList = () => {
             >
               <CarBuyStepper
                 selectedCar={selectedCarOffer.carInfo}
+                onBuy={() => setModalShown(false)}
               ></CarBuyStepper>
             </VerticallyCenteredModal>
           )}
