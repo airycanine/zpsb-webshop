@@ -92,7 +92,9 @@ const UsersList = () => {
                 <td>{customer.email}</td>
                 <td>
                   {cars
-                    .filter((car) => car.seller === customer.email)
+                    .filter(
+                      (car) => car.seller === customer.email && !car.buyer
+                    )
                     .map((car) => (
                       <tr className="text-center">
                         <td>
