@@ -9,12 +9,13 @@ import "../../styles/carBuyForm.css";
 
 interface CarBuyFormProps {
   selectedCar: Car;
+  onBuy: Function;
 }
 interface PropsFromStore {
   carReducer: CarReducer;
   customerReducer: CustomerReducer;
 }
-const CarBuyForm = ({ selectedCar }: CarBuyFormProps) => {
+const CarBuyForm = ({ selectedCar, onBuy }: CarBuyFormProps) => {
   const [show, setShow] = useState(false);
   const target = useRef(null);
   const { carReducer, customerReducer } = useSelector<Reducers, PropsFromStore>(
@@ -26,6 +27,7 @@ const CarBuyForm = ({ selectedCar }: CarBuyFormProps) => {
     }
   );
   const carActionsDispatcher = new CarActionsDispatcher(useDispatch());
+  const [agreed, setAgreed] = useState(false);
 
   return (
     <>
@@ -38,6 +40,7 @@ const CarBuyForm = ({ selectedCar }: CarBuyFormProps) => {
             etc.
             <Form.Check
               required
+              onChange={() => setAgreed(!agreed)}
               label="Agree to terms and conditions"
               feedback="You must agree before submitting."
             />
@@ -47,10 +50,13 @@ const CarBuyForm = ({ selectedCar }: CarBuyFormProps) => {
             className="col-md-2 h button-for-spinner"
             variant="success"
             onClick={() => {
-              carActionsDispatcher.buyCar({
-                ...selectedCar,
-                buyer: customerReducer.customer.email,
-              });
+              if (agreed) {
+                carActionsDispatcher.buyCar({
+                  ...selectedCar,
+                  buyer: customerReducer.customer.email,
+                });
+                onBuy();
+              }
             }}
           >
             Buy car

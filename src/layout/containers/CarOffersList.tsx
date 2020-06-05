@@ -106,6 +106,7 @@ const CarOffersList = () => {
             >
               <CarBuyStepper
                 selectedCar={selectedCarOffer.carInfo}
+                onBuy={() => setModalShown(false)}
               ></CarBuyStepper>
             </VerticallyCenteredModal>
           )}
@@ -174,7 +175,7 @@ const CarOffersList = () => {
                       >
                         {customer.likedCars &&
                         customer.likedCars.includes(
-                          createLikedCarKey(carOffer.carInfo) as string
+                          carOffer.carInfo.licenceNumber
                         ) ? (
                           <StarIcon />
                         ) : (
@@ -199,7 +200,7 @@ const CarOffersList = () => {
 
 const resolveLikedCars = (customer: Customer, car: Car) => {
   let likedCars = [...customer.likedCars];
-  let likedCarKey = createLikedCarKey(car);
+  let likedCarKey = car.licenceNumber;
   if (likedCars.includes(likedCarKey)) {
     likedCars = likedCars.filter((likedCar) => likedCar !== likedCarKey);
   } else {

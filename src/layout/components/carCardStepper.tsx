@@ -19,7 +19,8 @@ import OfferInfoCard from "./offerInfoCard";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      maxWidth: 400,
+      maxWidth: "100%",
+
       flexGrow: 1,
     },
     header: {
@@ -31,7 +32,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     img: {
       height: 255,
-      maxWidth: 400,
       overflow: "hidden",
       display: "block",
       width: "100%",
@@ -55,7 +55,7 @@ const CarCardStepper = ({ onButtonClick, cars }: CarCardStepperProps) => {
     return (
       <div className={classes.root}>
         <Paper square elevation={0} className={classes.header}>
-          <Typography>Offer</Typography>
+          <Typography>Car offer</Typography>
         </Paper>
         <OfferInfoCard
           imageSrc={cars[activeStep].images[0]}

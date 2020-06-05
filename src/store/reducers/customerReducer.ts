@@ -19,7 +19,7 @@ const initialState: CustomerReducer = {
       city: "",
       street: "",
       zip: "",
-      voivodeship: "",
+      voivodeship: "Zachodniopomorskie",
     },
     offers: [],
     likedCars: [],
@@ -54,6 +54,7 @@ export const customerReducer: Reducer<
         ...state,
         loggedIn: false,
         lastStatus: action.type,
+        customer: { ...initialState.customer },
       };
 
     case CustomerActionStatuses.UPDATE_CUSTOMER_SUCCESSFUL: {
