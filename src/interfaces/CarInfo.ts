@@ -1,4 +1,5 @@
 export interface Car {
+  offerNumber: string;
   licenceNumber: string;
   model: string;
   brand: string;

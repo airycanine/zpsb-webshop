@@ -16,13 +16,19 @@ import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import StarIcon from "@material-ui/icons/Star";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
-import { Backdrop, CircularProgress, IconButton } from "@material-ui/core";
+import {
+  AppBar,
+  Backdrop,
+  CircularProgress,
+  IconButton,
+} from "@material-ui/core";
 import VerticallyCenteredModal from "../components/verticallyCenteredModal";
 import { Customer } from "../../interfaces/CustomerInfo";
-import { createLikedCarKey } from "../../util/carUtils";
 import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
 import { toastr } from "react-redux-toastr";
 import CarBuyStepper from "../components/carBuyStepper";
+import CustomPagination from "../components/customPagination";
+import { Navbar } from "react-bootstrap";
 
 interface PropsFromStore {
   carsReducer: CarsReducer;
@@ -56,6 +62,9 @@ const CarOffersList = () => {
 
   const [modalShown, setModalShown] = useState<boolean>(false);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [offersPerPage] = useState(5);
+
   const [selectedCarOffer, setSelectedCarOffer] = useState<CarOffer>(
     carOffers[0]
   );
@@ -81,12 +90,25 @@ const CarOffersList = () => {
           liked: false,
         };
       });
-      setCarOffers(carsOffers);
+      setCarOffers(carsOffers.slice(0, offersPerPage));
       setBackdropOpened(false);
     } else {
       setBackdropOpened(false);
     }
   }, [carsReducer.lastStatus, carsReducer.cars]);
+
+  useEffect(() => {
+    const carsOffers: CarOffer[] = carsReducer.cars.map((car) => {
+      return {
+        carInfo: car,
+        featured: true,
+        liked: false,
+      };
+    });
+    setCarOffers(
+      carsOffers.slice(currentPage * offersPerPage, currentPage + offersPerPage)
+    );
+  }, [currentPage]);
 
   return (
     <div className={classes.root}>
@@ -110,12 +132,32 @@ const CarOffersList = () => {
               ></CarBuyStepper>
             </VerticallyCenteredModal>
           )}
+          <div className="pagination">
+            <CustomPagination
+              totalPages={Math.ceil(carsReducer.cars.length / offersPerPage)}
+              onPageChange={(pageNumber: number) => {
+                const indexOfLastPost = pageNumber * offersPerPage;
+                const indexOfFirstPost = indexOfLastPost - offersPerPage;
+                setCarOffers(
+                  carsReducer.cars
+                    .map((car) => {
+                      return {
+                        carInfo: car,
+                        featured: true,
+                        liked: false,
+                      };
+                    })
+                    .slice(indexOfFirstPost, indexOfLastPost)
+                );
+              }}
+            />
+          </div>
           <GridList cellHeight={250} spacing={10} className={classes.gridList}>
             {carOffers &&
               carOffers.map((carOffer, i) => (
                 <GridListTile
                   className={classes.gridListTile}
-                  key={carOffer.carInfo.images[0]}
+                  key={carOffer.carInfo.offerNumber}
                   cols={carOffer.featured ? 2 : 1}
                   rows={carOffer.featured ? 2 : 1}
                   onClick={() => {

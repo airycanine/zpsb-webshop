@@ -30,6 +30,7 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
   const carActionsDispatcher = new CarActionsDispatcher(useDispatch());
   const [car, setCar] = useState<Car>({
     brand: "",
+    offerNumber: "",
     currency: "PLN",
     images: [],
     licenceNumber: "",

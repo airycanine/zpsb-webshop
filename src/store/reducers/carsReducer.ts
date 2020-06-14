@@ -13,6 +13,7 @@ export interface CarActionDispatch extends Action<CarActionStatuses> {
 const initialState: CarsReducer = {
   cars: [
     {
+      offerNumber: "",
       licenceNumber: "",
       model: "",
       brand: "",

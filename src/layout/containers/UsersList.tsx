@@ -32,6 +32,7 @@ const UsersList = () => {
 
   const [selectedOffer, setSelectedOffer] = useState<Car>({
     brand: "",
+    offerNumber: "",
     buyer: undefined,
     currency: "",
     images: [],

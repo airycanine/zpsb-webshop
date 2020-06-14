@@ -12,9 +12,13 @@ export const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "space-around",
       overflow: "auto",
     },
+    listSubHeaderRoot: {
+      backgroundColor: "#E5E5E5",
+      color: "#252525",
+      /* To change the font, use the fontFamily rule */
+    },
     gridList: {
-      width: "80%",
-      height: `${windowHeight - windowHeight / 10}px`,
+      width: "90%",
     },
     titleBar: {
       width: "80%",

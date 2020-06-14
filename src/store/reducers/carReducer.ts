@@ -9,6 +9,7 @@ const initialState: CarReducer = {
   car: {
     licenceNumber: "",
     model: "",
+    offerNumber: "",
     brand: "",
     currency: "",
     images: [],

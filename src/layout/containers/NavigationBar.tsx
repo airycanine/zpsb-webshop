@@ -44,7 +44,7 @@ const NavigationBar = () => {
     useDispatch()
   );
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar sticky="top" bg="light" expand="lg">
       <div className="ml-5">
         <Navbar.Toggle aria-controls="basic-navbar-nav " />
         <Link to="/cars">
