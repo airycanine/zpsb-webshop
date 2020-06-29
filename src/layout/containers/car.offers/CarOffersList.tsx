@@ -112,9 +112,9 @@ const CarOffersList = () => {
           carsFromApi.sort(
             (currentOffer, nextOffer) =>
               // @ts-ignore
-              parseInt(nextOffer.price, 10) -
+              parseFloat(nextOffer.price) -
               // @ts-ignore
-              parseInt(currentOffer.price)
+              parseFloat(currentOffer.price)
           );
           break;
         }
@@ -122,7 +122,7 @@ const CarOffersList = () => {
           carsFromApi.sort(
             (currentOffer, nextOffer) =>
               // @ts-ignore
-              parseFloat(currentOffer.price) +
+              parseFloat(currentOffer.price) -
               // @ts-ignore
               parseFloat(nextOffer.price)
           );
