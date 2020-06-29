@@ -6,16 +6,17 @@ import { Car, CarActionStatuses } from "../../../interfaces/CarInfo";
 import { CarActionDispatch } from "../../reducers/carReducer";
 import { getCars } from "./getCarsDispatcher";
 import authHeader from "../../../jwt/jwtHeaderGetter";
+import { getActiveCars } from "./getActiveCarsDispatcher";
 
 export const buyCar = (car: Car, dispatch: Dispatch<CarActionDispatch>) => {
   buyCarPending(dispatch);
   axios
-    .put(`${API_ENDPOINT + CARS_POSTFIX}/${car.licenceNumber}`, car, {
+    .put(`${API_ENDPOINT + CARS_POSTFIX}/${car.offerNumber}`, car, {
       headers: authHeader(),
     })
     .then((response) => {
       buyCarSuccess(response.data, dispatch);
-      getCars(dispatch);
+      getActiveCars(dispatch);
       toastr.success("Success", "Car offer bought!");
     })
     .catch((error) => {

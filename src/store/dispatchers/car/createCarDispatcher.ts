@@ -6,6 +6,7 @@ import { Car, CarActionStatuses } from "../../../interfaces/CarInfo";
 import { CarActionDispatch } from "../../reducers/carReducer";
 import { getCars } from "./getCarsDispatcher";
 import authHeader from "../../../jwt/jwtHeaderGetter";
+import { getActiveCars } from "./getActiveCarsDispatcher";
 
 export const createCar = (car: Car, dispatch: Dispatch<CarActionDispatch>) => {
   createCarPending(dispatch);
@@ -15,12 +16,12 @@ export const createCar = (car: Car, dispatch: Dispatch<CarActionDispatch>) => {
     })
     .then((response) => {
       createCarSuccess(response.data, dispatch);
-      getCars(dispatch);
+      getActiveCars(dispatch);
       toastr.success("Success", "Car offer created!");
     })
     .catch((error) => {
       createCarFailed(dispatch);
-      toastr.error("Error", error.response.data);
+      toastr.error("Error", "Can't create car");
     });
 };
 

@@ -9,10 +9,13 @@ const initialState: CarReducer = {
   car: {
     licenceNumber: "",
     model: "",
+    description: "",
+    equipment: "",
     offerNumber: "",
     brand: "",
     currency: "",
     images: [],
+    tags: [],
     price: "",
     seller: "",
     buyer: "",
@@ -37,6 +40,7 @@ export const carReducer: Reducer<CarReducer, CarActionDispatch> = (
         car: action.payload,
         lastStatus: CarActionStatuses.UPDATE_CAR_SUCCESSFUL,
       };
+
     default:
       return { ...state, lastStatus: action.type };
   }

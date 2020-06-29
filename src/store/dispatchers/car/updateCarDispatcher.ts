@@ -6,6 +6,7 @@ import { Car, CarActionStatuses } from "../../../interfaces/CarInfo";
 import { CarActionDispatch } from "../../reducers/carReducer";
 import { getCars } from "./getCarsDispatcher";
 import authHeader from "../../../jwt/jwtHeaderGetter";
+import { getActiveCars } from "./getActiveCarsDispatcher";
 
 export const updateCar = (car: Car, dispatch: Dispatch<CarActionDispatch>) => {
   updateCarPending(dispatch);
@@ -15,7 +16,7 @@ export const updateCar = (car: Car, dispatch: Dispatch<CarActionDispatch>) => {
     })
     .then((response) => {
       updateCarSuccess(response.data, dispatch);
-      getCars(dispatch);
+      getActiveCars(dispatch);
       toastr.success("Success", "Car offer updated!");
     })
     .catch((error) => {

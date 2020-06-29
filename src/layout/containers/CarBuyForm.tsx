@@ -12,16 +12,12 @@ interface CarBuyFormProps {
   onBuy: Function;
 }
 interface PropsFromStore {
-  carReducer: CarReducer;
   customerReducer: CustomerReducer;
 }
 const CarBuyForm = ({ selectedCar, onBuy }: CarBuyFormProps) => {
-  const [show, setShow] = useState(false);
-  const target = useRef(null);
-  const { carReducer, customerReducer } = useSelector<Reducers, PropsFromStore>(
+  const { customerReducer } = useSelector<Reducers, PropsFromStore>(
     (state: Reducers) => {
       return {
-        carReducer: state.carReducer,
         customerReducer: state.customerReducer,
       };
     }

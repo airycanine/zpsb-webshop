@@ -7,12 +7,15 @@ import { carReducer } from "./carReducer";
 import { carsReducer } from "./carsReducer";
 import { adminReducer } from "./adminReducer";
 import { AdminReducer } from "../../interfaces/AdminInfo";
+import { TagsReducer } from "../../interfaces/TagsInfo";
+import { tagsReducer } from "./tagsReducer";
 
 export interface Reducers {
   customerReducer: CustomerReducer;
   carReducer: CarReducer;
   carsReducer: CarsReducer;
   adminReducer: AdminReducer;
+  tagsReducer: TagsReducer;
   toastr: any; //@TODO resolve type
 }
 
@@ -21,5 +24,6 @@ export const reducers: Reducer<Reducers> = combineReducers<Reducers>({
   carReducer,
   carsReducer,
   adminReducer,
+  tagsReducer,
   toastr: toastrReducer,
 });

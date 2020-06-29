@@ -40,7 +40,6 @@ const CurrencyDropdown = ({
             setPrice(event.target.value);
           }
         }}
-        required
       />
       <DropdownButton
         as={InputGroup.Append}
