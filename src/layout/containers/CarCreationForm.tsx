@@ -8,6 +8,8 @@ import { Car, CarActionStatuses, CarReducer } from "../../interfaces/CarInfo";
 import "../../styles/common.css";
 import "../../styles/carCreationForm.css";
 import { CustomerReducer } from "../../interfaces/CustomerInfo";
+import { getCars } from "../../store/dispatchers/car/getCarsDispatcher";
+import { getActiveCars } from "../../store/dispatchers/car/getActiveCarsDispatcher";
 
 interface CarCreationFormProps {
   hideModal: Function;
@@ -29,6 +31,8 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
   );
   const carActionsDispatcher = new CarActionsDispatcher(useDispatch());
   const [car, setCar] = useState<Car>({
+    description: "",
+    equipment: "",
     brand: "",
     offerNumber: "",
     currency: "PLN",
@@ -38,6 +42,7 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
     price: "",
     seller: customerReducer.customer.email,
     buyer: "",
+    tags: [],
   });
 
   const [lastImageUrl, setLastImageUrl] = useState("");
@@ -48,6 +53,7 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
     if (carReducer.lastStatus === CarActionStatuses.CREATE_CAR_SUCCESSFUL) {
       carActionsDispatcher.resetCreateStatus();
       hideModal();
+      setTimeout(() => carActionsDispatcher.getActiveCars(), 3000);
     }
   }, [carReducer.car]);
 
@@ -129,6 +135,35 @@ const CarCreationForm = ({ hideModal }: CarCreationFormProps) => {
                 setCar({ ...car, currency })
               }
             ></CurrencyDropdown>
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group as={Col} controlId="formGridDescription">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              required
+              as="textarea"
+              onChange={(event) =>
+                setCar({ ...car, description: event.target.value })
+              }
+            />
+            <Form.Control.Feedback type="invalid">
+              Description is required.
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group as={Col} controlId="formGridEquipment">
+            <Form.Label>Equipment</Form.Label>
+            <Form.Control
+              required
+              as="textarea"
+              value={car.equipment}
+              onChange={(event) =>
+                setCar({ ...car, equipment: event.target.value })
+              }
+            />
+            <Form.Control.Feedback type="invalid">
+              Description is required.
+            </Form.Control.Feedback>
           </Form.Group>
         </Form.Row>
         <Form.Row>

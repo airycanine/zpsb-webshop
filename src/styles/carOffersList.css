@@ -1,6 +1,6 @@
 .cars-offers{
     height: 60%;
-    width: 200px;
+    width: 80%;
 }
 img{
     width:100%;
@@ -19,6 +19,27 @@ img{
     top: 20px;
     z-index: 2000;
     width: auto;
+}
+.filters{
+    width: 100%;
+    margin-top: 1%;
+}
+.offers{
+    width: 80%;
+    margin-top: 1%;
+}
+.sorters button{
+    background-color: #ee8607;
+}
+.active-sorter{
+    background-color: darkred;
+}
+.sorters button:hover{
+     background-color: #8de083;
+ }
+
+.sort-title button:disabled{
+    color: #ee8607;
 }
 /* Position text in the middle of the page/image */
 .bg-text {

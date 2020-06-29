@@ -35,7 +35,10 @@ const UsersList = () => {
     offerNumber: "",
     buyer: undefined,
     currency: "",
+    description: "",
+    equipment: "",
     images: [],
+    tags: [],
     licenceNumber: "",
     model: "",
     price: 0,
@@ -56,7 +59,7 @@ const UsersList = () => {
         size="sm"
       >
         <div className="text-center">
-          <div>Delete car with regplate {selectedOffer?.licenceNumber}?</div>
+          <div>Delete offer {selectedOffer?.offerNumber}?</div>
           <Button
             onClick={() => {
               carActionsDispatcher.deleteCar(selectedOffer);

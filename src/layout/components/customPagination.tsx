@@ -26,7 +26,9 @@ export default function CustomPagination({
   return (
     <div className={classes.root}>
       <Pagination
-        onChange={(object, page) => onPageChange(page)}
+        onChange={(object, page) => {
+          onPageChange(page);
+        }}
         count={totalPages}
         variant="outlined"
         color="secondary"

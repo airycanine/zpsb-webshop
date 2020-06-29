@@ -5,10 +5,12 @@ import { toastr } from "react-redux-toastr";
 import { Car, CarActionStatuses } from "../../../interfaces/CarInfo";
 import { CarActionDispatch } from "../../reducers/carReducer";
 
-export const getCars = (dispatch: Dispatch<CarActionDispatch>) => {
+export const getActiveCarsDescendingByPrice = (
+  dispatch: Dispatch<CarActionDispatch>
+) => {
   getCarsPending(dispatch);
   axios
-    .get(`${API_ENDPOINT + CARS_POSTFIX}/all`)
+    .get(`${API_ENDPOINT + CARS_POSTFIX}/active/descending`)
     .then((response) => {
       getCarsSuccess(response.data, dispatch);
     })

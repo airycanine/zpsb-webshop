@@ -3,8 +3,11 @@ export interface Car {
   licenceNumber: string;
   model: string;
   brand: string;
+  equipment: string;
+  description: string;
   currency: string;
   images: any[];
+  tags: string[];
   price: number | "";
   seller: string | undefined;
   buyer: string | undefined;

@@ -6,6 +6,9 @@ import { getCars } from "./getCarsDispatcher";
 import { updateCar } from "./updateCarDispatcher";
 import { buyCar } from "./buyCarDispatcher";
 import { deleteCar } from "./deleteCarDispatcher";
+import { getActiveCars } from "./getActiveCarsDispatcher";
+import { getActiveCarsAscendingByPrice } from "./getActiveCarsAscendingByPrice";
+import { getActiveCarsDescendingByPrice } from "./getActiveCarsDescendingByPrice";
 
 export class CarActionsDispatcher {
   private readonly dispatch: Dispatch<CarActionDispatch>;
@@ -21,6 +24,13 @@ export class CarActionsDispatcher {
   buyCar = (car: Car) => buyCar(car, this.dispatch);
 
   getCars = () => getCars(this.dispatch);
+
+  getActiveCars = () => getActiveCars(this.dispatch);
+
+  getCarsAscendingByPrice = () => getActiveCarsAscendingByPrice(this.dispatch);
+
+  getCarsDescendingByPrice = () =>
+    getActiveCarsDescendingByPrice(this.dispatch);
 
   deleteCar = (car: Car) => deleteCar(car, this.dispatch);
 

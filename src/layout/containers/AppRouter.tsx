@@ -5,7 +5,7 @@ import NavigationBar from "../containers/NavigationBar";
 import CustomerRegistrationForm from "./CustomerRegistrationForm";
 import ReduxToastr from "react-redux-toastr";
 import { Pages } from "../../consts/Pages";
-import CarOffersList from "../containers/CarOffersList";
+import CarOffersList from "./car.offers/CarOffersList";
 import CustomerOffers from "../containers/CustomerOffers";
 import AccountInfo from "../containers/AccountInfo";
 import { useSelector } from "react-redux";

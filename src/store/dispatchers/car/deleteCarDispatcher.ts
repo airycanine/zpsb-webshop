@@ -6,16 +6,17 @@ import { Car, CarActionStatuses } from "../../../interfaces/CarInfo";
 import { CarActionDispatch } from "../../reducers/carReducer";
 import { getCars } from "./getCarsDispatcher";
 import authHeader from "../../../jwt/jwtHeaderGetter";
+import { getActiveCars } from "./getActiveCarsDispatcher";
 
 export const deleteCar = (car: Car, dispatch: Dispatch<CarActionDispatch>) => {
   deleteCarPending(dispatch);
   axios
-    .delete(`${API_ENDPOINT + CARS_POSTFIX}/${car.licenceNumber}`, {
+    .delete(`${API_ENDPOINT + CARS_POSTFIX}/${car.offerNumber}`, {
       headers: authHeader(),
     })
     .then((response) => {
       deleteCarSuccess(response.data, dispatch);
-      getCars(dispatch);
+      getActiveCars(dispatch);
       toastr.success(
         "Success",
         `Car with licence number ${car.licenceNumber} has been deleted!`
