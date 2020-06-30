@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Reducers } from "../../store/reducers/reducers";
 import { Customer } from "../../interfaces/CustomerInfo";
 import "../../styles/accountInfo.css";
+import EntryEditor from "../components/entryEditor";
+import { CustomerActionsDispatcher } from "../../store/dispatchers/customer/CustomerActionsDispatcher";
+import EntryViewer from "../components/entryViewer";
 
 interface PropsFromStore {
   user: Customer;
@@ -13,33 +16,51 @@ const AccountInfo = () => {
       user: state.customerReducer.customer,
     };
   });
-
+  const customerActionsDispatcher = new CustomerActionsDispatcher(
+    useDispatch()
+  );
   const [userInfo, setUserInfo] = useState({});
+  const [addressInfo, setAddressInfo] = useState({});
   useEffect(() => {
     setUserInfo({
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
-      city: `${user.address.city} ${user.address.zip}`,
+    });
+    setAddressInfo({
+      city: `${user.address.city}`,
       street: user.address.street,
       voivodeship: user.address.voivodeship,
+      zip: `${user.address.zip}`,
     });
   }, [user]);
 
   return (
     <div className="text-center info">
-      {userInfo &&
-        Object.entries(userInfo).map((entry: any) => {
-          return (
-            <div className="entry">
-              <span className="info-key">{entry[0]}</span>
-              <span className="separator">=></span>
-              <span className="info-value">
-                {entry[1] && entry[1] != " " ? entry[1] : "not specified"}
-              </span>
-            </div>
-          );
-        })}
+      {userInfo && (
+        <>
+          {Object.entries(userInfo).map((entry: any) => (
+            <EntryViewer entry={entry} />
+          ))}
+
+          {Object.entries(addressInfo).map((entry: any) => (
+            <EntryEditor
+              entry={entry}
+              onFocusLost={(value: string) => {
+                const changedAddress = {
+                  ...user.address,
+                  [entry[0]]: value,
+                };
+                // @ts-ignore
+                customerActionsDispatcher.updateCustomerAddress({
+                  ...user,
+                  address: { ...changedAddress },
+                });
+              }}
+            />
+          ))}
+        </>
+      )}
     </div>
   );
 };

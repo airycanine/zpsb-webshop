@@ -1,3 +1,6 @@
+body{
+    font: 1.4em/1em cursive;
+}
 .cars-offers{
     height: 60%;
     width: 80%;
@@ -28,11 +31,15 @@ img{
     width: 80%;
     margin-top: 1%;
 }
+
 .sorters button{
+    font: 1.4em/1.6em cursive;
     background-color: #ee8607;
 }
 .active-sorter{
-    background-color: darkred;
+    font-weight: bold;;
+    background-color: mediumseagreen;
+    border-radius: 20%;
 }
 .sorters button:hover{
      background-color: #8de083;
@@ -40,7 +47,9 @@ img{
 
 .sort-title button:disabled{
     color: #ee8607;
+    font: 1.4em/1.6em cursive;
 }
+
 /* Position text in the middle of the page/image */
 .bg-text {
     background-color: rgb(0,0,0); /* Fallback color */
@@ -57,3 +66,5 @@ img{
     padding: 20px;
     text-align: center;
 }
+
+

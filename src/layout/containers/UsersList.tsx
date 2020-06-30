@@ -8,6 +8,7 @@ import "../../styles/usersList.css";
 import { Car } from "../../interfaces/CarInfo";
 import VerticallyCenteredModal from "../components/verticallyCenteredModal";
 import { CarActionsDispatcher } from "../../store/dispatchers/car/CarActionsDispatcher";
+import UserOffersTable from "../components/userOffersTable";
 
 interface PropsFromStore {
   customers: Customer[];
@@ -95,25 +96,12 @@ const UsersList = () => {
                 <td>{index + 1}</td>
                 <td>{customer.email}</td>
                 <td>
-                  {cars
-                    .filter(
-                      (car) => car.seller === customer.email && !car.buyer
-                    )
-                    .map((car) => (
-                      <tr className="text-center">
-                        <td>
-                          <Button
-                            variant="danger"
-                            onClick={() => {
-                              setSelectedOffer(car);
-                              setModalShown(true);
-                            }}
-                          >
-                            {car.model}-{car.licenceNumber}
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
+                  <UserOffersTable
+                    setSelectedOffer={setSelectedOffer}
+                    setModalShown={setModalShown}
+                    cars={cars}
+                    customerEmail={customer.email}
+                  />
                 </td>
 
                 <td>{customer.firstName}</td>

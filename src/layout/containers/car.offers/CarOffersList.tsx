@@ -266,20 +266,46 @@ const CarOffersList = () => {
           <Row className="justify-content-md-center sort-title">
             <Button disabled>Sort by</Button>
           </Row>
-          <Row className="justify-content-md-center filters sorters">
+          <Row className="justify-content-md-center filters sorters ">
             <Button onClick={() => setFilterMode(FilterModes.BY_CHEAPEST)}>
-              Cheapest
+              <span
+                className={
+                  filterMode === FilterModes.BY_CHEAPEST ? "active-sorter" : ""
+                }
+              >
+                Cheapest
+              </span>
             </Button>
             <Button
               onClick={() => setFilterMode(FilterModes.BY_MOST_EXPENSIVE)}
             >
-              Most expensive
+              <span
+                className={
+                  filterMode === FilterModes.BY_MOST_EXPENSIVE
+                    ? "active-sorter"
+                    : ""
+                }
+              >
+                Most expensive
+              </span>
             </Button>
             <Button onClick={() => setFilterMode(FilterModes.BY_NEWEST)}>
-              Newest
+              <span
+                className={
+                  filterMode === FilterModes.BY_NEWEST ? "active-sorter" : ""
+                }
+              >
+                Newest
+              </span>
             </Button>
             <Button onClick={() => setFilterMode(FilterModes.BY_OLDEST)}>
-              Oldest
+              <span
+                className={
+                  filterMode === FilterModes.BY_OLDEST ? "active-sorter" : ""
+                }
+              >
+                Oldest
+              </span>
             </Button>
           </Row>
           <Row className="justify-content-md-center filters">

@@ -10,7 +10,10 @@ import {
   loginCustomerWithToken,
 } from "./loginCustomerDispatcher";
 import { logCustomerOut } from "./logoutCustomerDispatcher";
-import { updateCustomer } from "./updateCustomerDispatcher";
+import {
+  updateCustomer,
+  updateCustomerAddress,
+} from "./updateCustomerDispatcher";
 
 export class CustomerActionsDispatcher {
   private readonly dispatch: Dispatch<CustomerActionDispatch>;
@@ -25,6 +28,9 @@ export class CustomerActionsDispatcher {
 
   updateCustomer = (customer: Customer) => {
     updateCustomer(customer, this.dispatch);
+  };
+  updateCustomerAddress = (customer: Customer) => {
+    updateCustomerAddress(customer, this.dispatch);
   };
 
   logCustomerIn = (customerCredentials: CustomerCredentials) => {

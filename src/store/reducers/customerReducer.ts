@@ -65,6 +65,14 @@ export const customerReducer: Reducer<
         lastStatus: CustomerActionStatuses.UPDATE_CUSTOMER_SUCCESSFUL,
       };
     }
+    case CustomerActionStatuses.UPDATE_CUSTOMER_ADDRESS_SUCCESSFUL: {
+      return {
+        ...state,
+        customer: action.payload,
+        loggedIn: true,
+        lastStatus: CustomerActionStatuses.UPDATE_CUSTOMER_SUCCESSFUL,
+      };
+    }
     default:
       return { ...state, lastStatus: action.type };
   }
