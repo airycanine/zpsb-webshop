@@ -81,6 +81,8 @@ const CarOffersList = () => {
     carOffers[0]
   );
 
+  const [searchBar, setSearchBar] = useState("");
+
   const [filterMode, setFilterMode] = useState(0);
 
   useEffect(() => {
@@ -164,13 +166,28 @@ const CarOffersList = () => {
           )
         )
       );
+      carsOffers = carsOffers.filter(
+        (offer) =>
+          offer.carInfo.description
+            .toLowerCase()
+            .includes(searchBar.toLowerCase()) ||
+          offer.carInfo.model.toLowerCase().includes(searchBar.toLowerCase()) ||
+          offer.carInfo.brand.toLowerCase().includes(searchBar.toLowerCase())
+      );
 
       setCarOffers(carsOffers);
       setBackdropOpened(false);
     } else {
       setBackdropOpened(false);
     }
-  }, [carsReducer.lastStatus, carsReducer.cars, currentPage, tags, filterMode]);
+  }, [
+    carsReducer.lastStatus,
+    carsReducer.cars,
+    currentPage,
+    tags,
+    filterMode,
+    searchBar,
+  ]);
 
   function renderCarCard(carOffer: CarOffer) {
     return (
@@ -205,35 +222,136 @@ const CarOffersList = () => {
   };
 
   const countTotalPages = () => {
-    console.log(
-      "tagi",
-      carsReducer.cars.filter((car) =>
-        car.tags.some((tag) => tags.includes(tag))
-      )
-    );
-    console.log(
-      "tagi",
-      Math.ceil(
-        carsReducer.cars.filter((car) =>
-          car.tags.some((tag) => tags.includes(tag))
-        ).length
-      )
-    );
-    let number = Math.ceil(
-      (tags.length === 0
-        ? carsReducer.cars.length
-        : carsReducer.cars.filter((car) =>
+    // console.log(
+    //   "tagi",
+    //   carsReducer.cars.filter((car) =>
+    //     car.tags.some((tag) => tags.includes(tag))
+    //   )
+    // );
+    // console.log(
+    //   "tagi",
+    //   Math.ceil(
+    //     carsReducer.cars.filter((car) =>
+    //       car.tags.some((tag) => tags.includes(tag))
+    //     ).length
+    //   )
+    // );
+
+    let amountOfPages = 1;
+    if (tags.length === 0) {
+      if (searchBar.length > 0) {
+        amountOfPages = Math.ceil(
+          carsReducer.cars.filter(
+            (offer) =>
+              offer.description
+                .toLowerCase()
+                .includes(searchBar.toLowerCase()) ||
+              offer.model.toLowerCase().includes(searchBar.toLowerCase()) ||
+              offer.brand.toLowerCase().includes(searchBar.toLowerCase())
+          ).length / offersPerPage
+        );
+      } else {
+        amountOfPages = Math.ceil(carsReducer.cars.length / offersPerPage);
+      }
+    } else {
+      if (searchBar.length > 0) {
+        amountOfPages = Math.ceil(
+          carsReducer.cars
+            .filter((car) => car.tags.some((tag) => tags.includes(tag)))
+            .filter(
+              (offer) =>
+                offer.description
+                  .toLowerCase()
+                  .includes(searchBar.toLowerCase()) ||
+                offer.model.toLowerCase().includes(searchBar.toLowerCase()) ||
+                offer.brand.toLowerCase().includes(searchBar.toLowerCase())
+            ).length / offersPerPage
+        );
+      } else {
+        amountOfPages = Math.ceil(
+          carsReducer.cars.filter((car) =>
             car.tags.some((tag) => tags.includes(tag))
-          ).length) / offersPerPage
-    );
-    if (totalPages != number) {
-      setTotalPages(number);
+          ).length / offersPerPage
+        );
+      }
     }
-    return number;
+
+    if (totalPages != amountOfPages) {
+      setTotalPages(amountOfPages);
+    }
+    return amountOfPages;
   };
 
   return (
     <div className={classes.root}>
+      <div className="justify-content-md-center search-bar">
+        <input
+          value={searchBar}
+          onChange={(event) => {
+            setCurrentPage(1);
+            setSearchBar(event.target.value);
+          }}
+        ></input>
+      </div>
+      <div className="pagination">
+        <CustomPagination
+          totalPages={countTotalPages()}
+          onPageChange={(pageNumber: number) => {
+            console.log("zmiana strony..");
+            onPaginationChange(pageNumber);
+          }}
+        />
+      </div>
+
+      <Row className="justify-content-md-center filters sorters ">
+        <Button onClick={() => setFilterMode(FilterModes.BY_CHEAPEST)}>
+          <span
+            className={
+              filterMode === FilterModes.BY_CHEAPEST ? "active-sorter" : ""
+            }
+          >
+            Cheapest
+          </span>
+        </Button>
+        <Button onClick={() => setFilterMode(FilterModes.BY_MOST_EXPENSIVE)}>
+          <span
+            className={
+              filterMode === FilterModes.BY_MOST_EXPENSIVE
+                ? "active-sorter"
+                : ""
+            }
+          >
+            Most expensive
+          </span>
+        </Button>
+        <Button onClick={() => setFilterMode(FilterModes.BY_NEWEST)}>
+          <span
+            className={
+              filterMode === FilterModes.BY_NEWEST ? "active-sorter" : ""
+            }
+          >
+            Newest
+          </span>
+        </Button>
+        <Button onClick={() => setFilterMode(FilterModes.BY_OLDEST)}>
+          <span
+            className={
+              filterMode === FilterModes.BY_OLDEST ? "active-sorter" : ""
+            }
+          >
+            Oldest
+          </span>
+        </Button>
+      </Row>
+      <Row className="justify-content-md-center filters">
+        <Tags
+          tags={allTags}
+          onTagsChange={(tagsList: string[]) => {
+            setTags(tagsList);
+            setCurrentPage(1);
+          }}
+        />
+      </Row>
       {carOffers.length > 0 ? (
         <>
           <Backdrop className={classes.backdrop} open={backdropOpened}>
@@ -254,69 +372,6 @@ const CarOffersList = () => {
               ></CarBuyStepper>
             </VerticallyCenteredModal>
           )}
-          <div className="pagination">
-            <CustomPagination
-              totalPages={countTotalPages()}
-              onPageChange={(pageNumber: number) => {
-                console.log("zmiana strony..");
-                onPaginationChange(pageNumber);
-              }}
-            />
-          </div>
-          <Row className="justify-content-md-center sort-title">
-            <Button disabled>Sort by</Button>
-          </Row>
-          <Row className="justify-content-md-center filters sorters ">
-            <Button onClick={() => setFilterMode(FilterModes.BY_CHEAPEST)}>
-              <span
-                className={
-                  filterMode === FilterModes.BY_CHEAPEST ? "active-sorter" : ""
-                }
-              >
-                Cheapest
-              </span>
-            </Button>
-            <Button
-              onClick={() => setFilterMode(FilterModes.BY_MOST_EXPENSIVE)}
-            >
-              <span
-                className={
-                  filterMode === FilterModes.BY_MOST_EXPENSIVE
-                    ? "active-sorter"
-                    : ""
-                }
-              >
-                Most expensive
-              </span>
-            </Button>
-            <Button onClick={() => setFilterMode(FilterModes.BY_NEWEST)}>
-              <span
-                className={
-                  filterMode === FilterModes.BY_NEWEST ? "active-sorter" : ""
-                }
-              >
-                Newest
-              </span>
-            </Button>
-            <Button onClick={() => setFilterMode(FilterModes.BY_OLDEST)}>
-              <span
-                className={
-                  filterMode === FilterModes.BY_OLDEST ? "active-sorter" : ""
-                }
-              >
-                Oldest
-              </span>
-            </Button>
-          </Row>
-          <Row className="justify-content-md-center filters">
-            <Tags
-              tags={allTags}
-              onTagsChange={(tagsList: string[]) => {
-                setTags(tagsList);
-                setCurrentPage(1);
-              }}
-            />
-          </Row>
           <Row className="justify-content-md-center offers">
             {carOffers &&
               carOffers.map((carOffer, i) => {
