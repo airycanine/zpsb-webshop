@@ -73,7 +73,7 @@ const CarOffersList = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [offersPerPage] = useState(2);
+  const [offersPerPage] = useState(3);
 
   const [totalPages, setTotalPages] = useState<number>();
 

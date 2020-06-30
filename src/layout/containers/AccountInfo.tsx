@@ -36,29 +36,36 @@ const AccountInfo = () => {
   }, [user]);
 
   return (
-    <div className="text-center info">
+    <div className=" info">
       {userInfo && (
         <>
-          {Object.entries(userInfo).map((entry: any) => (
-            <EntryViewer entry={entry} />
-          ))}
-
-          {Object.entries(addressInfo).map((entry: any) => (
-            <EntryEditor
-              entry={entry}
-              onFocusLost={(value: string) => {
-                const changedAddress = {
-                  ...user.address,
-                  [entry[0]]: value,
-                };
-                // @ts-ignore
-                customerActionsDispatcher.updateCustomerAddress({
-                  ...user,
-                  address: { ...changedAddress },
-                });
-              }}
-            />
-          ))}
+          <div className="data">
+            <div className="static-data">
+              Dane stałe:
+              {Object.entries(userInfo).map((entry: any) => (
+                <EntryViewer entry={entry} />
+              ))}
+            </div>
+            <div className="changeable-data">
+              Dane zmienne:
+              {Object.entries(addressInfo).map((entry: any) => (
+                <EntryEditor
+                  entry={entry}
+                  onFocusLost={(value: string) => {
+                    const changedAddress = {
+                      ...user.address,
+                      [entry[0]]: value,
+                    };
+                    // @ts-ignore
+                    customerActionsDispatcher.updateCustomerAddress({
+                      ...user,
+                      address: { ...changedAddress },
+                    });
+                  }}
+                />
+              ))}
+            </div>
+          </div>
         </>
       )}
     </div>

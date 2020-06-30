@@ -11,3 +11,16 @@
 .separator{
     color:#64b667;
 }
+.data{
+    margin-left: 30%;
+    color: whitesmoke;;
+}
+
+.static-data{
+    margin-top:40px;
+    margin-left:15px;
+}
+.changeable-data{
+    margin-left:15px;
+    margin-top:40px;
+}
